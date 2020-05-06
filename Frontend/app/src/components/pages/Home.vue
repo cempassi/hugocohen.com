@@ -1,0 +1,15 @@
+<template>
+  <div>
+    <p>Home page of hugo cohen's website</p>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue, Prop } from "vue-property-decorator";
+
+@Component
+export default class Home extends Vue {
+	@Prop({default: "Home page of Hugo Cohen's website"}) private msg!: string;
+}
+</script>
+<style></style>

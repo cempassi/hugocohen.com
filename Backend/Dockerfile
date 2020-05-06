@@ -1,8 +1,8 @@
-FROM ubuntu:18.04
+FROM alpine:3.10
 
 LABEL maintener="Cedric M'Passi"
 
-RUN apt-get update -y && apt-get install -y python-pip python-dev
+RUN apk upgrade && apk add python3 python3-dev py-pip
 
 COPY ./app /app/app
 COPY ./requirements.txt /app/requirements.txt
