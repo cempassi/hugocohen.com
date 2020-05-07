@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <main>
     <p>Home page of hugo cohen's website</p>
-  </div>
+  </main>
 </template>
 
 <script lang="ts">

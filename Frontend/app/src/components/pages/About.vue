@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <h1>About</h1>
+  <main>
+    <p>About</p>
     <p>About Hugo Cohen</p>
-  </div>
+  </main>
 </template>
 
 <script lang="ts">
