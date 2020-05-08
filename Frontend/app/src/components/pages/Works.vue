@@ -36,15 +36,14 @@ export default class Works extends Vue {
 </script>
 <style scoped lang="scss">
 .main-wrapper {
-  height: 100%;
-  width: 100vw;
+	padding: 25px;
 }
 .work_display {
   display: grid;
   height: 100%;
   align-content: start;
-  grid-auto-columns: calc(40% - 8vh);
-  grid-template-rows: repeat(3, 20%);
+  grid-auto-columns: calc(40%);
+  grid-template-rows: repeat(3, minmax(250px, 40%));
   grid-row-gap: 1em;
   grid-column-gap: 1em;
   grid-auto-flow: column;
