@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="base">
+  <div>
     <Navigation />
     <router-view />
   </div>
@@ -22,30 +22,6 @@ export default class App extends Vue {}
 </script>
 
 <style lang="scss">
-*,
-*:before,
-*:after {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
+@import 'styles/global.scss';
 
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: left;
-  color: #2c3e50;
-  margin: 50px 50px 6vh 50px;
-  height: 100%;
-  width: 100%;
-}
-.base {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: auto;
-}
 </style>

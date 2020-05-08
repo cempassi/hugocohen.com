@@ -34,10 +34,10 @@ export default class Works extends Vue {
   ];
 }
 </script>
-<style lang="scss">
-.main-wrapper{
-  height:100%;
-  width: 100vw ;
+<style scoped lang="scss">
+.main-wrapper {
+  height: 100%;
+  width: 100vw;
 }
 .work_display {
   display: grid;

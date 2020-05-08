@@ -1,16 +1,14 @@
 <template>
-  <nav class="nav-desktop">
-    <ul class="navigation">
-      <li class="nav-name">
-        <router-link class="nav-name" to="/">Hugo Cohen</router-link>
-      </li>
-      <li class="nav-elements">
-        <router-link to="/works">Works</router-link>
-      </li>
-      <li class="nav-elements">
-        <router-link to="/about">About</router-link>
-      </li>
-    </ul>
+  <nav>
+    <div class="wrapper">
+      <div class="title">
+        <router-link to="/">Hugo Cohen</router-link>
+      </div>
+	  <div class="menu">
+          <router-link class="menu-item" to="/works">Works</router-link>
+          <router-link class="menu-item" to="/about">About</router-link>
+      </div>
+    </div>
   </nav>
 </template>
 
@@ -21,39 +19,30 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 export default class Navigation extends Vue {}
 </script>
 
-<style lang="scss">
-.nav-desktop{
-  width: 100%;
-  overflow: hidden;
-}
-
-.navigation {
+<style scoped lang="scss">
+.wrapper {
   display: flex;
-  justify-content: flex-start;
-  height: 20vh;
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  justify-content: space-between;
+  align-items: center;
 }
 
-li {
-  list-style-type: none;
-  font-size: 1.5vh;
+.title {
+	margin: 25px;
 }
 
-a {
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-  &:link,
-  &:visited {
-    color: black;
-  }
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 5px;
 }
 
-.nav-name {
-  margin-right: 33vw;
-}
-.nav-elements {
-  padding: 0 2vw;
+.menu-item {
+	flex: 0 1;
+	margin:20px;
 }
 </style>

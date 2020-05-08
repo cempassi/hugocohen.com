@@ -11,7 +11,7 @@ import Navbar from "@/components/Navbar.vue";
 
 @Component
 export default class About extends Vue {
-	@Prop({default: "About Hugo Cohen"}) private msg!: string;
+  @Prop({ default: "About Hugo Cohen" }) private msg!: string;
 }
 </script>
 <style></style>
