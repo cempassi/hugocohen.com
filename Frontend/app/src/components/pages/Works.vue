@@ -1,6 +1,6 @@
 <template>
-  <main class="main-wrapper">
-    <div class="work_display">
+	<main v-bind:class="selector" >
+    <div ref="scroller" @scroll="scrolling" class="work_display">
       <div class="work_item" v-for="item in list" :key="item">{{ item }}</div>
     </div>
   </main>
@@ -32,12 +32,41 @@ export default class Works extends Vue {
     "Eighteen",
     "Nineteen",
   ];
+  private ScrollStatus = 0;
+  private ScrollMax = 0;
+  scrolling(ev: any) {
+    const post = ev.target;
+    this.ScrollStatus = post.scrollLeft;
+    console.log("Current scroll pos: " + post.scrollLeft);
+    console.log(
+      "Current scroll width: " + (post.scrollWidth - post.clientWidth)
+    );
+    this.ScrollStatus = post.scrollLeft;
+    this.ScrollMax = post.scrollWidth - post.clientWidth;
+  };
+
+  get selector() {
+	  if (this.ScrollStatus > 0) {
+		  return (this.ScrollStatus == this.ScrollMax ? "main-wrapper-end" :
+			  "main-wrapper-middle")
+	  };
+	  return ("main-wrapper-start");
+  };
 }
 </script>
 <style scoped lang="scss">
 .main-wrapper {
-	padding: 25px;
+  &-start {
+    padding-left: 25px;
+  }
+  &-middle{
+    padding: 0px;
+  }
+  &-end {
+    padding-right: 25px;
+  }
 }
+
 .work_display {
   display: grid;
   height: 100%;
@@ -48,10 +77,6 @@ export default class Works extends Vue {
   grid-column-gap: 1em;
   grid-auto-flow: column;
   overflow-y: scroll;
-}
-.work_display:before,
-.work_display:after {
-  width: 10px;
 }
 
 .work_item {
