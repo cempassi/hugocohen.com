@@ -1,13 +1,13 @@
 <template>
   <main v-bind:class="selector">
     <div ref="scroller" @scroll="scrolling" class="work_display">
-      <template v-for="item in videos">
+      <template v-for="video in videos">
         <div
           class="work_item"
-          :key="item"
-          v-bind:style="{'background-image': 'url(' + item.image + ')'}"
+          :key="video.id"
+          v-bind:style="{'background-image': 'url(' + video.image + ')'}"
         >
-          <div class="name">{{item.name}}</div>
+          <div class="name">{{video.name}}</div>
         </div>
       </template>
     </div>
@@ -21,38 +21,13 @@ import { VideoAPI } from "@/api/VideoAPI";
 
 @Component
 export default class Works extends Vue {
-  @Prop({ default: "Home page of Hugo Cohen's website" }) private msg!: string;
-
   private videos: Video[] = [];
-  private list: Array<string> = [
-    "One",
-    "Two",
-    "Three",
-    "Four",
-    "Five",
-    "Six",
-    "Seven",
-    "Eight",
-    "Nine",
-    "Ten",
-    "Eleven",
-    "Twelve",
-    "Thriteen",
-    "Fourteen",
-    "Sixteen",
-    "Seventeen",
-    "Eighteen",
-    "Nineteen",
-  ];
   private ScrollStatus = 0;
   private ScrollMax = 0;
+
   scrolling(ev: any) {
     const post = ev.target;
     this.ScrollStatus = post.scrollLeft;
-    console.log("Current scroll pos: " + post.scrollLeft);
-    console.log(
-      "Current scroll width: " + (post.scrollWidth - post.clientWidth)
-    );
     this.ScrollStatus = post.scrollLeft;
     this.ScrollMax = post.scrollWidth - post.clientWidth;
   }
@@ -83,35 +58,22 @@ export default class Works extends Vue {
     padding-right: 25px;
   }
 }
-.background__img {
-  width: 100%;
-  height: 100%;
-}
-
-.name {
-  opacity: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  color: white;
-  &:hover {
-    transition: opaticy 0.9s ease-in-out;
-    opacity: 1;
-  }
-}
 
 .work_display {
   display: grid;
   height: 100%;
   align-content: start;
-  grid-auto-columns: calc(40%);
+  grid-auto-columns: minmax(450px, calc(40%));
   grid-template-rows: repeat(3, minmax(250px, 50%));
   grid-row-gap: 1em;
   grid-column-gap: 1em;
   grid-auto-flow: column;
   overflow-y: scroll;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .work_item {
@@ -127,6 +89,20 @@ export default class Works extends Vue {
     filter: gray;
     -webkit-filter: grayscale(80%);
   }
-  //font-size: 1em;
+}
+
+.name {
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  color: white;
+  font-size: 1em;
+  &:hover {
+    transition: opaticy 0.9s ease-in-out;
+    opacity: 1;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app">
     <Navigation />
     <router-view />
   </div>
@@ -23,5 +23,9 @@ export default class App extends Vue {}
 
 <style lang="scss">
 @import 'styles/global.scss';
-
+ 
+.app {
+	height:100vh;
+	width: vw;
+}
 </style>
