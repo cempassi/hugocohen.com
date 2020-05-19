@@ -86,7 +86,6 @@ export default class Works extends Vue {
   background-size: cover;
   flex-direction: column;
   background-position: center;
-  border: 2px solid black;
   &:hover {
     transition: filter 0.5s ease-in-out;
     filter: gray;

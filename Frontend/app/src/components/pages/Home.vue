@@ -34,7 +34,7 @@ export default class Home extends Vue {
   private current = 0;
 
   async mounted(): Promise<void> {
-    this.videos = await VideoAPI.getAllVideos();
+    this.videos = await VideoAPI.getHomeVideos();
   }
 
   playing(e: Event, id: number) {

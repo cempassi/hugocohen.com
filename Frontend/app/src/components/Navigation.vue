@@ -1,12 +1,14 @@
 <template>
-  <nav>
-    <div class="wrapper">
-      <div class="title">
-        <router-link to="/">Hugo Cohen</router-link>
-      </div>
-	  <div class="menu">
+  <nav class="wrapper-relative">
+    <div class="wrapper-absolute">
+      <div class="wrapper-fixed">
+        <div class="title">
+          <router-link to="/">Hugo Cohen</router-link>
+        </div>
+        <div class="menu">
           <router-link class="menu-item" to="/works">Works</router-link>
           <router-link class="menu-item" to="/about">About</router-link>
+        </div>
       </div>
     </div>
   </nav>
@@ -20,16 +22,33 @@ export default class Navigation extends Vue {}
 </script>
 
 <style scoped lang="scss">
-.wrapper {
+.wrapper-relative {
+    position: relative;
+    width: 100vw;
+    height: 15vh;
+    margin: 0 auto;
+}
+.wrapper-absolute {
+    position: absolute;
+    width: 220px;
+    position: absolute;
+    top: 0;
+}
+
+.wrapper-fixed {
+  position: fixed;
+  top: 0px;
+  width: 100%;
   display: flex;
   flex-flow: row nowrap;
   flex-shrink: 0;
   justify-content: space-between;
   align-items: center;
+  background-color: white;
 }
 
 .title {
-	margin: 45px;
+  margin: 45px;
 }
 
 .menu {
@@ -41,7 +60,7 @@ export default class Navigation extends Vue {}
 }
 
 .menu-item {
-	flex: 0 1;
-	margin:30px;
+  flex: 0 1;
+  margin: 30px;
 }
 </style>
