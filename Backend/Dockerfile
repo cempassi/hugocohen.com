@@ -2,11 +2,13 @@ FROM alpine:3.11
 
 LABEL maintener="Cedric M'Passi"
 
-RUN apk upgrade && apk add python3 python3-dev libcurl curl-dev
+RUN apk upgrade && apk add bash python3 python3-dev libcurl curl-dev
 RUN mkdir -p /app/data
 
 COPY ./app /app/app
 COPY ./requirements.txt /app/requirements.txt
+COPY ./wait-for-it.sh /app/wait-for-it.sh
+RUN chmod +x /app/wait-for-it.sh
 
 WORKDIR /app
 

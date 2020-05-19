@@ -29,7 +29,7 @@ export default class Navigation extends Vue {}
 }
 
 .title {
-	margin: 25px;
+	margin: 45px;
 }
 
 .menu {
@@ -38,11 +38,10 @@ export default class Navigation extends Vue {}
   justify-content: space-between;
   flex-flow: row nowrap;
   align-items: center;
-  padding: 5px;
 }
 
 .menu-item {
 	flex: 0 1;
-	margin:20px;
+	margin:30px;
 }
 </style>

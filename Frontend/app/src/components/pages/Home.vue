@@ -1,9 +1,19 @@
 <template>
   <main class="wrapper">
-    <div class="parent">
+    <div class="parent"  @keyup.esc="stopping">
       <template v-for="video in videos">
-        <div class="child" :key="video.id">
-          <img :src="video.image" class="image" />
+        <div class="video_wrapper" :key="video.id" v-if="play == true && current == video.id">
+          <iframe
+            class="video"
+            :src="'https://player.vimeo.com' + video.uri +'?autoplay=1&autopause=1&loop=1'"
+            frameborder="0"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+          >Working</iframe>
+        </div>
+        <div  class="child" :key="video.id" v-else>
+          <img @mouseenter="stopping" :src="video.image_large" class="image" @click="playing($event,
+			video.id)" />
           <p class="title">{{video.name}}</p>
         </div>
       </template>
@@ -20,9 +30,32 @@ import { VideoAPI } from "@/api/VideoAPI";
 @Component
 export default class Home extends Vue {
   private videos: Video[] = [];
+  private play = false;
+  private current = 0;
 
   async mounted(): Promise<void> {
     this.videos = await VideoAPI.getAllVideos();
+  }
+
+  playing(e: Event, id: number) {
+    if (id >= 1) {
+      this.play = !this.play;
+      this.current = id;
+    } else {
+      this.play = false;
+      this.current = 0;
+    }
+  }
+
+  stopping(e: Event) {
+      this.current = 0;
+      this.play = false;
+      console.log("stopping");
+  }
+
+  runvideo(): string {
+    const iframe = document.createElement("div");
+    return iframe.innerHTML;
   }
 }
 </script>
@@ -50,9 +83,6 @@ export default class Home extends Vue {
   &::-webkit-scrollbar {
     display: none;
   }
-  &:first-child {
-    padding-right: 20%;
-  }
 }
 
 .child {
@@ -61,6 +91,23 @@ export default class Home extends Vue {
   align-self: center;
   justify-self: center;
   scroll-snap-align: center;
+}
+
+.video_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  justify-self: stretch;
+  scroll-snap-align: center;
+  & iframe {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100vh;
+    height: 100vw;
+    border: 0;
+    scroll-snap-align: center;
+  }
 }
 
 .image {

@@ -5,9 +5,9 @@
         <div
           class="work_item"
           :key="video.id"
-          v-bind:style="{'background-image': 'url(' + video.image + ')'}"
+          v-bind:style="{'background-image': 'url(' + video.image_small + ')'}"
         >
-          <div class="name">{{video.name}}</div>
+          <div class="name">{{ video.name }}</div>
         </div>
       </template>
     </div>
@@ -34,7 +34,7 @@ export default class Works extends Vue {
 
   get selector() {
     if (this.ScrollStatus > 0) {
-      return this.ScrollStatus == this.ScrollMax
+      return this.ScrollStatus + 30 >= this.ScrollMax
         ? "main-wrapper-end"
         : "main-wrapper-middle";
     }
@@ -48,6 +48,8 @@ export default class Works extends Vue {
 </script>
 <style scoped lang="scss">
 .main-wrapper {
+  height: 100vh;
+
   &-start {
     padding-left: 25px;
   }
@@ -62,9 +64,10 @@ export default class Works extends Vue {
 .work_display {
   display: grid;
   height: 100%;
+  width: 100%;
   align-content: start;
   grid-auto-columns: minmax(450px, calc(40%));
-  grid-template-rows: repeat(3, minmax(250px, 50%));
+  grid-template-rows: repeat(4, minmax(250px, 50%));
   grid-row-gap: 1em;
   grid-column-gap: 1em;
   grid-auto-flow: column;

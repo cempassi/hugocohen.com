@@ -2,14 +2,20 @@ export interface InterfaceVideo {
   id?: number;
   name: string;
   link: string;
-  image: string;
+  uri: string;
+  image_small: string;
+  image_large: string;
+  OnHome: boolean;
 }
 
 export class VideoDTO implements InterfaceVideo {
   id?: number;
   name = "";
   link = "";
-  image = "";
+  uri = "";
+  image_small = "";
+  image_large = "";
+  OnHome = false;
 }
 
 export default class Video extends VideoDTO {

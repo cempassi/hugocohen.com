@@ -6,7 +6,7 @@ export abstract class VideoAPI {
 
   static async getAllVideos(): Promise<Video[]> {
     const response = await this.videosAxios.get(
-      "http://localhost:5000/video/",
+		"https://api.cempassi.dev/video/",
       {
         headers: {
           "Access-Control-Allow-Origin": "*",

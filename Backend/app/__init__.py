@@ -1,9 +1,9 @@
 import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-
-db = SQLAlchemy()
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+from .models import db
 
 def create_app(test_config=None):
     # create and configure the app
@@ -18,10 +18,14 @@ def create_app(test_config=None):
         app.config.from_mapping(test_config)
     # initialize the database
     db.init_app(app)
-    from . import utils
-    from . import video
-    app.register_blueprint(utils.bp)
-    app.register_blueprint(video.bp)
+    from .api import sync
+    from .api.video import videoapi
+    from .models.Video import Video
+    app.register_blueprint(sync.bp)
+    app.register_blueprint(videoapi)
+    admin = Admin(app, name="hugoweb", template_mode="bootstrap3")
+    admin.add_view(ModelView(Video, db.session))
+
     with app.app_context():
         db.create_all()  # Create database tables for our data models
 
