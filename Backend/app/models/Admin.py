@@ -1,12 +1,16 @@
 import os
 import uuid
+import flask_login as login
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_admin.contrib import sqla
 from . import db
 
-class Admin(db.Model):
+
+class Administrator(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
+    login = db.Column(db.String(80), unique=True)
+    password = db.Column(db.String(120))
     email = db.Column(db.String(120))
-    password = db.Column(db.String(64))
     about = db.Column(db.Text())
 
     @property
@@ -26,4 +30,18 @@ class Admin(db.Model):
 
     # Required for administrative interface
     def __unicode__(self):
-        return self.username
+        return self.login
+
+    def init():
+        if not Administrator.query.all():
+            login = os.getenv('ADMIN_LOGIN')
+            password = generate_password_hash(os.getenv('ADMIN_PASSWD'))
+            email = os.getenv('ADMIN_MAIL')
+            admin = Administrator(login=login, password=password, email=email)
+            db.session.add(admin)
+            db.session.commit();
+
+class MyModelView(sqla.ModelView):
+
+    def is_accessible(self):
+        return login.current_user.is_authenticated

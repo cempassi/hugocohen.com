@@ -13,6 +13,14 @@ class Video(db.Model):
                             unique=True, nullable=False)
     OnHome = db.Column(db.Boolean, name="OnHome", default=False, nullable=False)
 
+    @property
+    def is_authenticated(self):
+        return True
+
+    def get_id(self):
+        return self.id
+
+
     def __repr__(self):
         return '<Name {}>'.format(self.name)
 

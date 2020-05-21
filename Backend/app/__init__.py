@@ -1,9 +1,20 @@
 import os
+import flask_admin as admin
+import flask_login as login
 from flask import Flask
 from flask_cors import CORS
-from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from .models import db
+
+
+def load_user(admin_id):
+    from .models.Admin import Administrator
+    return db.session.query(Administrator).get(admin_id)
+
+def init_login(app):
+    login_manager = login.LoginManager()
+    login_manager.user_loader(load_user)
+    login_manager.init_app(app)
 
 def create_app(test_config=None):
     # create and configure the app
@@ -18,17 +29,22 @@ def create_app(test_config=None):
         app.config.from_mapping(test_config)
     # initialize the database
     db.init_app(app)
-    from .api import sync
+    from .api.sync import bp as sync
     from .api.video import videoapi
     from .models.Video import Video
-    app.register_blueprint(sync.bp)
+    from .models.Admin import Administrator, MyModelView
+    from .api.admin import MyAdminIndexView
+    init_login(app)
+    app.register_blueprint(sync)
     app.register_blueprint(videoapi)
-    admin = Admin(app, name="hugoweb", template_mode="bootstrap3")
-    admin.add_view(ModelView(Video, db.session))
+    a = admin.Admin(app, name="hugoweb", index_view=MyAdminIndexView(),
+                        base_template='admin/my_master.html', template_mode="bootstrap3")
+    a.add_view(MyModelView(Video, db.session))
+    a.add_view(MyModelView(Administrator, db.session))
 
     with app.app_context():
         db.create_all()  # Create database tables for our data models
-
+        Administrator.init()
         return app
 
     # ensure the instance folder exists

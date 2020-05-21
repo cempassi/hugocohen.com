@@ -1,15 +1,23 @@
 <template>
   <main v-bind:class="selector">
-    <div ref="scroller" @scroll="scrolling" class="work_display">
-      <template v-for="video in videos">
-        <div
-          class="work_item"
-          :key="video.id"
-          v-bind:style="{'background-image': 'url(' + video.image_small + ')'}"
-        >
-          <div class="name">{{ video.name }}</div>
-        </div>
-      </template>
+    <div v-if="videoOn == false">
+      <div ref="scroller" @scroll="scrolling" class="work_display">
+        <template v-for="video in videos">
+          <div
+            v-bind:style="{'background-image': 'url(' + video.image_small + ')'}"
+            :key="video.id"
+            class="work_item"
+            @click="togglevideo"
+          >
+            <router-link class="link" :to="'/video/' + video.id">
+              <div class="name">{{ video.name }}</div>
+            </router-link>
+          </div>
+        </template>
+      </div>
+    </div>
+    <div v-else>
+      <router-view></router-view>
     </div>
   </main>
 </template>
@@ -24,6 +32,7 @@ export default class Works extends Vue {
   private videos: Video[] = [];
   private ScrollStatus = 0;
   private ScrollMax = 0;
+  private videoOn = false;
 
   scrolling(ev: any) {
     const post = ev.target;
@@ -44,7 +53,22 @@ export default class Works extends Vue {
   async mounted(): Promise<void> {
     this.videos = await VideoAPI.getAllVideos();
   }
+
+  togglevideo (e: Event) {
+      e.stopPropagation() // this will stop propagation of this event to upper level
+      this.videoOn = !this.videoOn
+      if (this.videoOn) {
+        window.addEventListener('click', () => {
+          this.videoOn = false
+        })
+      } else {
+        window.removeEventListener('click', () => {
+          this.videoOn = false
+        })
+      }
+  }
 }
+
 </script>
 <style scoped lang="scss">
 .main-wrapper {
@@ -61,6 +85,11 @@ export default class Works extends Vue {
   }
 }
 
+.link {
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+}
 .work_display {
   display: grid;
   height: 100%;

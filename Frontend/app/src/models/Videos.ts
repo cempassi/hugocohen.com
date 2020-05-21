@@ -1,5 +1,5 @@
 export interface InterfaceVideo {
-  id?: number;
+  id: number;
   name: string;
   link: string;
   uri: string;
@@ -9,7 +9,7 @@ export interface InterfaceVideo {
 }
 
 export class VideoDTO implements InterfaceVideo {
-  id?: number;
+  id = 0;
   name = "";
   link = "";
   uri = "";
@@ -22,5 +22,9 @@ export default class Video extends VideoDTO {
   constructor(dto: VideoDTO) {
     super();
     Object.assign(this, dto);
+  }
+
+  static create(dto: InterfaceVideo): Video {
+    return new Video(dto);
   }
 }

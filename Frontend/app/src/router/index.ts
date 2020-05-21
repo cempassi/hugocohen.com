@@ -2,7 +2,8 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "@/components/pages/Home.vue";
 import About from "@/components/pages/About.vue";
-import Works from "@/components/pages/Works.vue";
+import VideoView from "@/components/pages/Video.vue";
+import DisplayVideo from "@/components/pages/DisplayVideo.vue";
 
 Vue.use(Router);
 
@@ -19,9 +20,16 @@ export default new Router({
       component: About,
     },
     {
-      path: "/works",
-      name: "Works",
-      component: Works,
+      path: "/video",
+      name: "Video",
+      component: VideoView,
+      children: [
+        {
+          path: "/video/:id",
+          name: "Display Video",
+          component: DisplayVideo,
+        },
+      ],
     },
   ],
 });

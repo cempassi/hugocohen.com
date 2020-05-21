@@ -6,7 +6,7 @@
           <router-link to="/">Hugo Cohen</router-link>
         </div>
         <div class="menu">
-          <router-link class="menu-item" to="/works">Works</router-link>
+          <router-link class="menu-item" to="/video">Video</router-link>
           <router-link class="menu-item" to="/about">About</router-link>
         </div>
       </div>
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue} from "vue-property-decorator";
 
 @Component
 export default class Navigation extends Vue {}
