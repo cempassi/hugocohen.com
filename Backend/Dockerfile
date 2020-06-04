@@ -12,9 +12,9 @@ RUN chmod +x /app/wait-for-it.sh
 
 WORKDIR /app
 
-RUN apk add build-base mariadb-dev libffi-dev && \
+RUN apk add tiff-dev build-base mariadb-dev libffi-dev git libjpeg-turbo-dev zlib-dev && \
     pip3 install --upgrade pip && pip3 install -r requirements.txt && \
-    apk del build-base
+    apk del build-base git
 
 RUN pip install remote-pdb pdbpp
 EXPOSE 5000

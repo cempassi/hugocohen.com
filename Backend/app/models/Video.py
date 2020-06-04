@@ -6,6 +6,7 @@ class Video(db.Model):
     id = db.Column(db.Integer, unique=True, primary_key=True)
     name = db.Column(db.String(80), name="name", nullable=False)
     link = db.Column(db.String(125), name="link", unique=True, nullable=False)
+    host = db.Column(db.String(80), name="host", nullable=False)
     uri = db.Column(db.String(125), name="uri", unique=True, nullable=False)
     image_small = db.Column(db.String(125), name="image_small",
                             unique=True, nullable=False)
@@ -19,7 +20,6 @@ class Video(db.Model):
 
     def get_id(self):
         return self.id
-
 
     def __repr__(self):
         return '<Name {}>'.format(self.name)

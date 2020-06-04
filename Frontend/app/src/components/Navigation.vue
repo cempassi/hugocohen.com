@@ -6,6 +6,7 @@
           <router-link to="/">Hugo Cohen</router-link>
         </div>
         <div class="menu">
+          <router-link class="menu-item" to="/photo">Photo</router-link>
           <router-link class="menu-item" to="/video">Video</router-link>
           <router-link class="menu-item" to="/about">About</router-link>
         </div>

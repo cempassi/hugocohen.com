@@ -1,8 +1,6 @@
 import os
 import uuid
-import flask_login as login
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_admin.contrib import sqla
 from . import db
 
 
@@ -41,7 +39,3 @@ class Administrator(db.Model):
             db.session.add(admin)
             db.session.commit();
 
-class MyModelView(sqla.ModelView):
-
-    def is_accessible(self):
-        return login.current_user.is_authenticated

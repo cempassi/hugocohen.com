@@ -4,8 +4,10 @@ import flask_login as login
 from flask import Flask
 from flask_cors import CORS
 from flask_admin.contrib.sqla import ModelView
+from flask_uploads import UploadSet, IMAGES, configure_uploads, patch_request_class
 from .models import db
 
+images = UploadSet('images', IMAGES)
 
 def load_user(admin_id):
     from .models.Admin import Administrator
@@ -19,7 +21,6 @@ def init_login(app):
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
-    CORS(app)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -27,20 +28,31 @@ def create_app(test_config=None):
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
+
+    CORS(app)
+    configure_uploads(app, (images))
+    patch_request_class(app)
     # initialize the database
     db.init_app(app)
     from .api.sync import bp as sync
     from .api.video import videoapi
+    from .api.album import albumapi
+    from .models.modelviews import MyModelView, ImageView, AlbumView
     from .models.Video import Video
-    from .models.Admin import Administrator, MyModelView
+    from .models.Admin import Administrator
+    from .models.Photos import Photo
+    from .models.Albums import Album
     from .api.admin import MyAdminIndexView
     init_login(app)
     app.register_blueprint(sync)
     app.register_blueprint(videoapi)
+    app.register_blueprint(albumapi)
     a = admin.Admin(app, name="hugoweb", index_view=MyAdminIndexView(),
                         base_template='admin/my_master.html', template_mode="bootstrap3")
     a.add_view(MyModelView(Video, db.session))
     a.add_view(MyModelView(Administrator, db.session))
+    a.add_view(AlbumView(Album, db.session))
+    a.add_view(ImageView(Photo, db.session))
 
     with app.app_context():
         db.create_all()  # Create database tables for our data models

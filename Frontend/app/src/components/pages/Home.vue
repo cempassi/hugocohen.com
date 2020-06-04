@@ -2,22 +2,10 @@
   <main class="wrapper">
     <div class="parent"  @keyup.esc="stopping">
       <template v-for="video in videos">
-        <div class="video_wrapper" :key="video.id" v-if="play == true && current == video.id">
-          <iframe
-            class="video"
-            :src="'https://player.vimeo.com' + video.uri +'?autoplay=1&autopause=1&loop=1'"
-            frameborder="0"
-            allow="autoplay; fullscreen"
-            allowfullscreen
-          >Working</iframe>
-        </div>
-        <div  class="child" :key="video.id" v-else>
-          <img @mouseenter="stopping" :src="video.image_large" class="image" @click="playing($event,
-			video.id)" />
-          <p class="title">{{video.name}}</p>
+        <div class="video_wrapper" :key="video.id">
+			<DisplayVideo :video="video" :home="true"/>
         </div>
       </template>
-      <div class="child">End</div>
     </div>
   </main>
 </template>
@@ -26,8 +14,11 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import Video from "@/models/videos";
 import { VideoAPI } from "@/api/VideoAPI";
+import DisplayVideo  from "@/components/pages/DisplayVideo.vue";
 
-@Component
+@Component({
+	components: { DisplayVideo}
+})
 export default class Home extends Vue {
   private videos: Video[] = [];
   private play = false;
@@ -62,11 +53,18 @@ export default class Home extends Vue {
 
 <style scoped lang="scss">
 .wrapper {
-  width: 100vw;
+  width: 90%;
+  overflow-y: hidden;
 }
 
+.link {
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+  }
+
 .parent {
-  height: 100vh;
+  height: 90%;
   display: grid;
   align-content: start;
   grid-template-rows: 80vh;

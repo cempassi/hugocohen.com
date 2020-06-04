@@ -30,6 +30,7 @@ def add_items(data) -> dict:
         updater = Video(name=video['name'],
                         link=video['link'],
                         uri=video['uri'],
+                        host='vimeo',
                         image_small=video['image_small'],
                         image_large=video['image_large'],
                         OnHome=False

@@ -8,7 +8,7 @@ build :
 	else \
 		rm checksum && mv checksum.tmp checksum ;\
 		yarn --cwd ./app install ; \
-		yarn --cwd ./app build ; \
+		yarn --cwd ./app build --fix ; \
 	fi;\
 
 clean:
