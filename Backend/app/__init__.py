@@ -42,11 +42,12 @@ def create_app(test_config=None):
     from .models.Admin import Administrator
     from .models.Photos import Photo
     from .models.Albums import Album
-    from .api.admin import MyAdminIndexView
+    from .api.admin import MyAdminIndexView, aboutapi
     init_login(app)
     app.register_blueprint(sync)
     app.register_blueprint(videoapi)
     app.register_blueprint(albumapi)
+    app.register_blueprint(aboutapi)
     a = admin.Admin(app, name="hugoweb", index_view=MyAdminIndexView(),
                         base_template='admin/my_master.html', template_mode="bootstrap3")
     a.add_view(MyModelView(Video, db.session))

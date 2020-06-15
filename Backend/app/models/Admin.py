@@ -30,6 +30,12 @@ class Administrator(db.Model):
     def __unicode__(self):
         return self.login
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "about": f"{self.about}"
+        }
+
     def init():
         if not Administrator.query.all():
             login = os.getenv('ADMIN_LOGIN')

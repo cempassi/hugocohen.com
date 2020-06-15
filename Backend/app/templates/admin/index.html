@@ -12,6 +12,16 @@
         <a class="btn btn-primary" href={{api_url}}>
             <i class="icon-arrow-left icon-white"></i>Sync with vimeo
         </a>
+        <p class="lead">
+            Add Vimeo Video
+						<form action="/video" method="post" novalidate>
+						{{ add_vid.hidden_tag() }}
+        <p>
+            {{ add_vid.url.label }}<br>
+            {{ add_vid.url(size=32) }}
+        </p>
+        <p>{{ add_vid.submit() }}</p>
+    		</form>
         {% else %}
         <form method="POST" action="">
             {{ form.hidden_tag() if form.hidden_tag }}

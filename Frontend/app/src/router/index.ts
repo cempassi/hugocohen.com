@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "@/components/pages/Home.vue";
-import About from "@/components/pages/About.vue";
+import AboutView from "@/components/pages/About.vue";
 import VideoView from "@/components/pages/Video.vue";
 import PhotoView from "@/components/pages/Photo.vue";
 import DisplayVideo from "@/components/pages/DisplayVideo.vue";
@@ -20,7 +20,7 @@ export default new Router({
     {
       path: "/about",
       name: "About",
-      component: About,
+      component: AboutView,
       meta: { title: "About" },
     },
     {

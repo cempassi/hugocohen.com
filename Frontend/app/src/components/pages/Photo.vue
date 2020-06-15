@@ -2,7 +2,7 @@
   <main class="main-wrapper">
     <div v-if="photoOn == false">
       <transition-group name="fade" class="grid-container">
-        <div class="grid-item" v-for="album in albums" :key="album.id">
+        <div class="grid-item" v-for="album in active" :key="album.id">
           <div class="image-container">
             <router-link :to="'/photo/' + album.id">
               <img :src="cover(album.photos)" @click="handler($event, album.id)" />
@@ -12,7 +12,7 @@
         </div>
       </transition-group>
     </div>
-    <router-view v-else :photos="albums[albumId - 1].photos"></router-view>
+    <router-view v-else :photos="albums[albumId].photos"></router-view>
   </main>
 </template>
 
@@ -30,13 +30,16 @@ export default class AlbumView extends Vue {
 
   async mounted(): Promise<void> {
     this.albums = await AlbumAPI.getAllAlbums();
-    console.log("Je suis ici");
-    console.log(this.albums);
   }
 
   get host() {
     return process.env.VUE_APP_API_URL + "/static/images/";
   }
+
+	get active() {
+		return this.albums.filter((album: Album) => album.active)
+	}
+
 
   cover(photos: Photo[]) {
     const photo = photos.find((x: Photo) => x.cover);
@@ -56,7 +59,7 @@ export default class AlbumView extends Vue {
 
   currentAlbum(albumId: number) {
     console.log(albumId);
-    this.albumId = albumId;
+    this.albumId = albumId - 1;
   }
 
   togglephoto(e: Event) {

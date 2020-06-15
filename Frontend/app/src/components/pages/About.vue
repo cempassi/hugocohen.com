@@ -1,10 +1,7 @@
 <template>
   <main class="content">
     <p class="text">
-      Hugo Cohen Sprung is born in 1989 in Paris where he work now as filmmaker, cinematographer and photographer.
-      His works are commercials, fashion and beauty films, as well as music videos with company such as Ed Banger Record, Nina Ricci, Hermès, Zadig&Voltaire, Mixa ect...
-      In 2018 he co-directed with Adi Walter a documentary named "Marin Karmitz, un portrait".
-      He is know focusing on writing and directing personal projects of fictions and documentary.
+			{{about.about}}
     </p>
     <div class="links">
       <div class="icon">
@@ -31,9 +28,12 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import Navbar from "@/components/Navbar.vue";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import About from "@/models/About";
+import {AboutAPI} from "@/api/AboutAPI";
 
 @Component
-export default class About extends Vue {
+export default class AboutView extends Vue {
+	private about: About = {id: 0, about: ""};
   private insta: object = {
     link: "https://www.instagram.com/hugocohen",
     icon: faInstagram,
@@ -42,6 +42,10 @@ export default class About extends Vue {
     link: "mailto:hugocohenpictures@gmail.com",
     icon: faEnvelope,
   };
+
+	async mounted(): Promise<void> {
+		this.about = await AboutAPI.getAbout();
+	}
 }
 </script>
 <style lang="scss" scoped>

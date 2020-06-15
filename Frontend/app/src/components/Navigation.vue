@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue} from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Navigation extends Vue {}
@@ -24,16 +24,17 @@ export default class Navigation extends Vue {}
 
 <style scoped lang="scss">
 .wrapper-relative {
-    position: relative;
-    width: 100vw;
-    height: 15vh;
-    margin: 0 auto;
+  position: relative;
+  width: 100vw;
+  height: 15vh;
+  margin: 0 auto;
 }
 .wrapper-absolute {
-    position: absolute;
-    width: 220px;
-    position: absolute;
-    top: 0;
+  z-index: 1000;
+  position: absolute;
+  width: 220px;
+  position: absolute;
+  top: 0;
 }
 
 .wrapper-fixed {

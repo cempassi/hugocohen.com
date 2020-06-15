@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import Video from "@/models/videos";
+import Video from "@/models/Videos";
 import { VideoAPI } from "@/api/VideoAPI";
 
 @Component

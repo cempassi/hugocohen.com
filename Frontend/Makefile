@@ -2,7 +2,7 @@ all : build
 
 build : 
 	touch checksum
-	find app/src app/public -type f -exec md5 "{}" + > checksum.tmp; \
+	find app/src app/public -type f -exec md5sum "{}" + > checksum.tmp; \
 	if cmp checksum.tmp checksum ; then \
 		echo "Nothing to be done"; rm checksum.tmp ; \
 	else \
