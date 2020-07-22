@@ -28,6 +28,7 @@ class Video(db.Model):
         return {
             "id": self.id,
             "name": f"{self.name}",
+            "host": f"{self.host}",
             "link": f"{self.link}",
             "uri": f"{self.uri}",
             "image_small": f"{self.image_small}",

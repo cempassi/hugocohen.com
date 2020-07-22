@@ -3,46 +3,56 @@
 {{ super() }}
 <div class="row-fluid">
 
-    <div>
-        {% if current_user.is_authenticated %}
-        <h1>Administration</h1>
-        <p class="lead">
-            Vimeo Sync
-        </p>
-        <a class="btn btn-primary" href={{api_url}}>
-            <i class="icon-arrow-left icon-white"></i>Sync with vimeo
-        </a>
-        <p class="lead">
-            Add Vimeo Video
-						<form action="/video" method="post" novalidate>
-						{{ add_vid.hidden_tag() }}
-        <p>
-            {{ add_vid.url.label }}<br>
-            {{ add_vid.url(size=32) }}
-        </p>
-        <p>{{ add_vid.submit() }}</p>
-    		</form>
-        {% else %}
-        <form method="POST" action="">
-            {{ form.hidden_tag() if form.hidden_tag }}
-            {% for f in form if f.type != 'CSRFTokenField' %}
-            <div>
-                {{ f.label }}
-                {{ f }}
-                {% if f.errors %}
-                <ul>
-                    {% for e in f.errors %}
-                    <li>{{ e }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </div>
-            {% endfor %}
-            <button class="btn" type="submit">Submit</button>
-        </form>
-        {{ link | safe }}
-        {% endif %}
-    </div>
+	<div>
+		{% if current_user.is_authenticated %}
+		<h1>Administration</h1>
+		<p class="lead">
+			Vimeo Sync
+		</p>
+		<a class="btn btn-primary" href={{api_url}}>
+			<i class="icon-arrow-left icon-white"></i>Sync with vimeo
+		</a>
+		<p class="lead">
+			Add Vimeo Video
+			<form action="/video/add/vimeo" method="POST" novalidate>
+				{{ add_vimeo.hidden_tag() }}
+				<p>
+					{{ add_vimeo.url.label }}<br>
+					{{ add_vimeo.url(size=32) }}
+				</p>
+				<p>{{ add_vimeo.submit() }}</p>
+			</form>
+			<p class="lead">
+				Add Youtube Video
+				<form action="/video/add/youtube" method="POST" novalidate>
+					{{ add_youtube.hidden_tag() }}
+					<p>
+						{{ add_youtube.url.label }}<br>
+						{{ add_youtube.url(size=32) }}
+					</p>
+					<p>{{ add_youtube.submit() }}</p>
+				</form>
+				{% else %}
+				<form method="POST" action="">
+					{{ form.hidden_tag() if form.hidden_tag }}
+					{% for f in form if f.type != 'CSRFTokenField' %}
+					<div>
+						{{ f.label }}
+						{{ f }}
+						{% if f.errors %}
+						<ul>
+							{% for e in f.errors %}
+							<li>{{ e }}</li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+					</div>
+					{% endfor %}
+					<button class="btn" type="submit">Submit</button>
+				</form>
+				{{ link | safe }}
+				{% endif %}
+	</div>
 
 </div>
 {% endblock body %}

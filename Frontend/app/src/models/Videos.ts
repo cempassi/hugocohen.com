@@ -1,6 +1,7 @@
 export interface InterfaceVideo {
   id: number;
   name: string;
+  host: string;
   link: string;
   uri: string;
   image_small: string;
@@ -11,6 +12,7 @@ export interface InterfaceVideo {
 export class VideoDTO implements InterfaceVideo {
   id = 0;
   name = "";
+  host = "";
   link = "";
   uri = "";
   image_small = "";

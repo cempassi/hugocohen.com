@@ -51,7 +51,8 @@ class MyAdminIndexView(admin.AdminIndexView):
         form = VideoForm(request.form)
         self._template_args['api_url'] = '/sync'
         self._template_args['api_add_vid'] = '/video'
-        self._template_args['add_vid'] = form
+        self._template_args['add_vimeo'] = form
+        self._template_args['add_youtube'] = form
         return super(MyAdminIndexView, self).index()
 
     @expose('/login/', methods=('GET', 'POST'))

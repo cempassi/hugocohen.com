@@ -1,14 +1,30 @@
 <template>
-  <nav class="wrapper-relative">
+  <nav class="wrapper-relative" >
     <div class="wrapper-absolute">
       <div class="wrapper-fixed">
         <div class="title">
-          <router-link to="/">Hugo Cohen</router-link>
+          <router-link to="/" @click.native="reset">Hugo Cohen</router-link>
         </div>
-        <div class="menu">
-          <router-link class="menu-item" to="/photo">Photo</router-link>
-          <router-link class="menu-item" to="/video">Video</router-link>
-          <router-link class="menu-item" to="/about">About</router-link>
+        <div class="main-menu">
+          <ul class="menu" ref="menu">
+            <li>
+              <router-link class="menu-item" @click.native="toggle" to="/photo">Photo</router-link>
+            </li>
+            <li>
+              <router-link class="menu-item" @click.native="toggle" to="/video">Video</router-link>
+            </li>
+            <li>
+              <router-link class="menu-item" @click.native="toggle" to="/about">About</router-link>
+            </li>
+          </ul>
+          <div class="menu-toogle">
+            <div v-if="toggleMenu">
+              <font-awesome-icon :icon="menu.bars" @click="toggle"></font-awesome-icon>
+            </div>
+            <div v-else>
+              <font-awesome-icon :icon="menu.cross" @click="toggle"></font-awesome-icon>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -17,9 +33,60 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 @Component
-export default class Navigation extends Vue {}
+export default class Navigation extends Vue {
+  $refs!: {
+    menu: HTMLUListElement;
+  };
+	private showNavbar = true;
+	private lastScrollPos = 0;
+  private toggleMenu = true;
+  private menu: object = {
+    bars: faBars,
+    cross: faTimes,
+  };
+
+	mounted () {
+		window.addEventListener('scroll', this.onScroll);
+	}
+
+	beforeDestroy () {
+		window.removeEventListener('scroll', this.onScroll);
+	}
+
+	onScroll() {
+		const currentScrollPos = window.pageXOffset ||
+			document.documentElement.scrollTop;
+		if (Math.abs(currentScrollPos - this.lastScrollPos) < 60 ) {
+			return
+		}
+
+		this.showNavbar = currentScrollPos < this.lastScrollPos;
+		this.lastScrollPos = currentScrollPos;
+	}
+
+  reset() {
+		if (document.documentElement.clientWidth > 768)
+			return;
+    this.toggleMenu = true;
+    this.$refs.menu.style.visibility = "hidden";
+    this.$refs.menu.style.opacity = "0";
+  }
+  toggle() {
+		if (document.documentElement.clientWidth > 768)
+			return;
+    this.$refs.menu.style.visibility = this.toggleMenu
+      ? "visible"
+      : "hidden";
+    this.$refs.menu.style.opacity = this.toggleMenu
+      ? "1"
+      : "0";
+    this.toggleMenu = !this.toggleMenu;
+		console.log(document.documentElement.clientWidth);
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -59,6 +126,42 @@ export default class Navigation extends Vue {}
   justify-content: space-between;
   flex-flow: row nowrap;
   align-items: center;
+}
+
+.menu-toogle {
+  display: none;
+}
+
+.main-menu {
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+  .menu-toogle {
+    display: flex;
+    margin: 45px;
+		align-items: center;
+  }
+
+  .menu {
+    position: absolute;
+    right: 0px;
+    height: 100vh;
+    top: 10vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+		visibility: hidden;
+		opacity: 0;
+    transition: visibility 0s, opacity 0.2s;
+  }
 }
 
 .menu-item {

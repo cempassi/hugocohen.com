@@ -15,25 +15,69 @@ export default new Router({
       path: "/",
       name: "Hello",
       component: Home,
-      meta: { title: "Home" },
+      meta: {
+        title: "Home - Hugo Cohen",
+        metaTags: [
+          {
+            name: "description",
+            content: "The Home page of Hugo Cohen's websiste.",
+          },
+          {
+            property: "og:description",
+            content: "The Home page of Hugo Cohen's website.",
+          },
+        ],
+      },
     },
     {
       path: "/about",
       name: "About",
       component: AboutView,
-      meta: { title: "About" },
+      meta: {
+        title: "About - Hugo Cohen",
+        metaTags: [
+          {
+            name: "description",
+            content: "The About page of Hugo Cohen's websiste.",
+          },
+          {
+            property: "og:description",
+            content: "The About page of Hugo Cohen's websiste.",
+          },
+        ],
+      },
     },
     {
       path: "/photo",
       name: "Photo",
       component: PhotoView,
-      meta: { title: "Photo" },
+      meta: {
+        title: "Photos - Hugo Cohen",
+        metaTags: [
+          {
+            name: "description",
+            content: "Hugo Cohen's photo albums.",
+          },
+          {
+            property: "og:description",
+            content: "Hugo Cohen's photo albums.",
+          },
+        ],
+      },
       children: [
         {
           path: "/photo/:id",
           name: "Display Photo",
           component: DisplayPhoto,
-          meta: { title: "DisplayPhoto" },
+          meta: {
+            title: "Photos - Hugo Cohen",
+            metaTags: [
+              {
+                name: "description",
+                content: "A photo album of Hugo Cohen.",
+              },
+            ],
+          },
         },
       ],
     },
@@ -41,13 +85,33 @@ export default new Router({
       path: "/video",
       name: "Video",
       component: VideoView,
-      meta: { title: "Video" },
+      meta: {
+        title: "Videos - Hugo Cohen",
+        metaTags: [
+          {
+            name: "description",
+            content: "The Videos of Hugo Cohen.",
+          },
+          {
+            property: "og:description",
+            content: "The Videos of Hugo Cohen.",
+          },
+        ],
+      },
       children: [
         {
           path: "/video/:id",
           name: "Display Video",
           component: DisplayVideo,
-          meta: { title: "DisplayVideo" },
+          meta: {
+            title: "Video - Hugo Cohen'",
+            metaTags: [
+              {
+                name: "description",
+                content: "A Video by Hugo Cohen.",
+              },
+            ],
+          },
         },
       ],
     },

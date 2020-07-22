@@ -1,25 +1,13 @@
 <template>
   <main class="content">
-    <p class="text">
-			{{about.about}}
-    </p>
+    <video class="vid" autoplay loop muted playsinline>
+      <source type="video/mp4" src="@/assets/about.mp4" />Video isn't working
+    </video>
     <div class="links">
-      <div class="icon">
-        <a :href="mail.link">
-          <font-awesome-icon :icon="mail.icon"></font-awesome-icon>
-        </a>
-      </div>
-      <div class="icon">
-        <a :href="insta.link">
-          <font-awesome-icon :icon="insta.icon"></font-awesome-icon>
-        </a>
-      </div>
+      <a :href="mail.link" class="link">Mail</a>
+      <a :href="insta.link" class>Instagram</a>
     </div>
-    <div class="av">
-      <video class="vid" autoplay loop muted playsinline>
-        <source type="video/mp4" src="@/assets/about.mp4" />Video isn't working
-      </video>
-    </div>
+    <p class="text">{{about.about}}</p>
   </main>
 </template>
 
@@ -29,11 +17,11 @@ import Navbar from "@/components/Navbar.vue";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import About from "@/models/About";
-import {AboutAPI} from "@/api/AboutAPI";
+import { AboutAPI } from "@/api/AboutAPI";
 
 @Component
 export default class AboutView extends Vue {
-	private about: About = {id: 0, about: ""};
+  private about: About = { id: 0, about: "" };
   private insta: object = {
     link: "https://www.instagram.com/hugocohen",
     icon: faInstagram,
@@ -43,38 +31,36 @@ export default class AboutView extends Vue {
     icon: faEnvelope,
   };
 
-	async mounted(): Promise<void> {
-		this.about = await AboutAPI.getAbout();
-	}
+  async mounted(): Promise<void> {
+    this.about = await AboutAPI.getAbout();
+  }
 }
 </script>
 <style lang="scss" scoped>
 .content {
-  height: 90vh;
-  display: grid;
-  grid-template-rows: 20vh 20vh 10vh 10vh;
-  grid-template-columns: 10vw 40vw 40vw 10vw;
-  grid-gap: 2rem;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
 .text {
-  grid-row-start: 2;
-  grid-row-end: 3;
-  grid-column-start: 2;
-  grid-column-end: 3;
+  text-align: justify;
+  font-size: 1.5vw;
+  padding: 4vw;
 }
 
 .links {
   display: flex;
-  grid-row-start: 3;
-  grid-row-end: 4;
-  grid-column-start: 2;
-  grid-column-end: 3;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
+a {
+  justify-content: space-between;
+  padding: 1rem;
+  font-size: 1.5vw;
+}
 .icon {
   font-size: 1.5em;
 }
@@ -84,12 +70,55 @@ export default class AboutView extends Vue {
   grid-row-end: 4;
   grid-column-start: 3;
   grid-column-end: 4;
-
 }
 
 .vid {
   width: 50%;
   height: 50%;
   object-fit: contain;
+}
+@media only screen and (max-width: 768px) {
+  .content {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text {
+    text-align: justify;
+    font-size: 14px;
+    padding: 4vw;
+  }
+
+  .links {
+    display: flex;
+    justify-content: space-between;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+  }
+
+  a {
+    justify-content: space-between;
+    padding: 1rem;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+  }
+  .icon {
+    font-size: 1.5em;
+  }
+
+  .av {
+    grid-row-start: 2;
+    grid-row-end: 4;
+    grid-column-start: 3;
+    grid-column-end: 4;
+  }
+
+  .vid {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+  }
 }
 </style>

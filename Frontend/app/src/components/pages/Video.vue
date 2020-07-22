@@ -93,39 +93,40 @@ export default class VideoView extends Vue {
   width: 100%;
   text-decoration: none;
 }
-.work_display {
-  display: grid;
+@media only screen and (min-width: 769px) {
+  .work_display {
+    display: grid;
 
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 
-  grid-auto-columns: minmax(450px, calc(40%));
-  grid-template-rows: repeat(4, minmax(250px, 50%));
-  grid-row-gap: 1em;
-  grid-column-gap: 1em;
-  grid-auto-flow: column;
+    grid-auto-columns: minmax(450px, calc(40%));
+    grid-template-rows: repeat(4, minmax(250px, 50%));
+    grid-row-gap: 1em;
+    grid-column-gap: 1em;
+    grid-auto-flow: column;
 
-  align-content: start;
+    align-content: start;
 
-  overflow-y: scroll;
-  overflow: -moz-scrollbars-none;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
+    overflow-y: scroll;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
-}
-
-.work_item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-size: cover;
-  flex-direction: column;
-  background-position: center;
-  &:hover {
-    transition: filter 0.5s ease-in-out;
-    filter: gray;
-    -webkit-filter: grayscale(80%);
+  .work_item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    flex-direction: column;
+    background-position: center;
+    &:hover {
+      transition: filter 0.5s ease-in-out;
+      filter: gray;
+      -webkit-filter: grayscale(80%);
+    }
   }
 }
 
@@ -151,5 +152,50 @@ export default class VideoView extends Vue {
 
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .work_display {
+    display: inline-flex;
+
+    flex-direction: column;
+    justify-content: space-between;
+		flex-wrap: nowrap;
+		margin: -12px 0 0 -12px;
+  }
+
+  .work_item {
+    display: flex;
+		height: 30vh;
+		width: 90vw;
+    justify-content: center;
+    align-items: center;
+    background-size: contain;
+		background-repeat: no-repeat;
+    flex-direction: column;
+    background-position: center;
+		margin: 12px 0 0 12px;
+    &:hover {
+      transition: filter 0.5s ease-in-out;
+      filter: gray;
+      -webkit-filter: grayscale(80%);
+    }
+	}
+
+.name {
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  color: white;
+  font-size: 1em;
+  &:hover {
+    transition: opaticy 0.9s ease-in-out;
+    opacity: 1;
+  }
+}
+
 }
 </style>

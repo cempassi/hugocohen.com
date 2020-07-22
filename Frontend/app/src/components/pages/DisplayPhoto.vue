@@ -1,63 +1,100 @@
 <template>
-  <section class="gallery">
-		<vue-gallery-slideshow :images="photoUri" :index="index" @close="index = null"></vue-gallery-slideshow>
+  <section v-bind:class="selector">
+    <transition-group name="fade" class="img-container">
+      <div class="img-container-inner" v-for="(photo, index) in photoUri" :key="`photo-${index}`">
+        <img :src="photo" />
+      </div>
+    </transition-group>
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import Photo from "@/models/Photos";
-import VueGallerySlideshow from 'vue-gallery-slideshow'
 
-@Component({
-	components: {
-		VueGallerySlideshow
-	}
-})
+@Component
 export default class DisplayPhoto extends Vue {
   @Prop() readonly photos: Photo[] | undefined;
-	private index = 0;
+  private index = 0;
+  private ScrollStatus = 0;
+  private ScrollMax = 0;
 
   get host() {
     return process.env.VUE_APP_API_URL + "/static/images/";
   }
 
-	get photoUri() {
-		return this?.photos.map((photo) => this.host + photo.filename);
-	}
+  get photoUri() {
+    return this.photos?.map((photo) => this.host + photo.filename);
+  }
 
-	onClick(i: number) {
-		this.index = i;
-	}
+  onClick(i: number) {
+    this.index = i;
+  }
+
+  randomIndex() {
+    if (this.photos) {
+      return Math.floor(Math.random() * this.photos.length);
+    }
+  }
+
+  get selector() {
+    if (this.ScrollStatus > 0) {
+      return this.ScrollStatus + 30 >= this.ScrollMax
+        ? "main-wrapper-end"
+        : "main-wrapper-middle";
+    }
+    return "main-wrapper-start";
+  }
+
+  scrolling(ev: any) {
+    const post = ev.target;
+    this.ScrollStatus = post.scrollLeft;
+    this.ScrollStatus = post.scrollLeft;
+    this.ScrollMax = post.scrollWidth - post.clientWidth;
+  }
 }
 </script>
 
 <style scoped lang="scss">
-.gallery {
-  //padding: 0 0 4rem 0;
-	overflow-y: scroll;
-	display: flex;
-	grid-auto-flow: column;
-  grid-gap: 1rem;
-}
+.main-wrapper {
+  height: 100vh;
+  width: 100%;
 
-.img-container {
-  width: 100vw;
-  height: 80vh;
-  cursor: pointer;
-  overflow: hidden;
-
-  //scroll-snap-align: center;
-  &:hover .img-content-hover {
-    display: block;
+  &-start {
+    //padding-left: 1rem;
+  }
+  &-middle {
+    //padding: 0px;
+  }
+  &-end {
+    //padding-right: 1rem;
   }
 }
 
-img {
-	width: 100%;
-  height: 50vh;
-	object-fit: contain;
-  transition: all 0.3s ease-in-out;
+.img-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  height: 80vh;
+  width: auto;
+  scroll-snap-type: x mandatory;
 }
 
+img {
+  height: 60vh;
+  width: auto;
+  padding: 0% 1vh;
+  object-fit: contain;
+  scroll-snap-align: center;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>

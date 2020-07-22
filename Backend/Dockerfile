@@ -5,7 +5,6 @@ LABEL maintener="Cedric M'Passi"
 RUN apk upgrade && apk add bash python3 python3-dev libcurl curl-dev
 RUN mkdir -p /app/data
 
-COPY ./app /app/app
 COPY ./requirements.txt /app/requirements.txt
 COPY ./wait-for-it.sh /app/wait-for-it.sh
 RUN chmod +x /app/wait-for-it.sh
@@ -17,6 +16,8 @@ RUN apk add tiff-dev build-base mariadb-dev libffi-dev git libjpeg-turbo-dev zli
     apk del build-base git
 
 RUN pip install remote-pdb pdbpp
+
+COPY ./app /app/app
 EXPOSE 5000
 
 ENV PYTHONUNBUFFERED=1

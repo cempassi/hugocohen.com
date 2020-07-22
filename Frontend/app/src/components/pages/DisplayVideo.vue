@@ -5,7 +5,7 @@
         <iframe
           ref="frame"
           class="video"
-          :src="'https://player.vimeo.com' + video.uri +'?autoplay=1&autopause=1&loop=1&muted=1'"
+          :src="link + '?autoplay=1&autopause=1&loop=1&muted=1'"
           frameborder="0"
           allow="autoplay; fullscreen"
           allowfullscreen
@@ -13,7 +13,6 @@
           webkitallowfullscreen
         >Working</iframe>
       </div>
-      <p class="title">{{video.name}}</p>
     </div>
   </main>
 </template>
@@ -54,6 +53,12 @@ export default class DisplayVideo extends passVideo {
       });
     }
   }
+	get link() {
+		if (this.video?.host == 'vimeo') {
+			return 'https://player.vimeo.com' + this.video?.uri
+		}
+		return 'https://www.youtube.com/embed/' + this.video?.uri
+	}
 }
 </script>
 

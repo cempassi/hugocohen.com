@@ -13,7 +13,6 @@ export abstract class VideoAPI {
         },
       }
     );
-    console.log(response.data);
     return new Video(response.data as VideoDTO);
   }
 
@@ -26,7 +25,6 @@ export abstract class VideoAPI {
         },
       }
     );
-    console.log(response.data);
     return response.data.map((videoDto: VideoDTO) => new Video(videoDto));
   }
 
@@ -39,7 +37,6 @@ export abstract class VideoAPI {
         },
       }
     );
-    console.log(response.data);
     return response.data.map((videoDto: VideoDTO) => new Video(videoDto));
   }
 }
