@@ -33,5 +33,5 @@ class Video(db.Model):
             "uri": f"{self.uri}",
             "image_small": f"{self.image_small}",
             "image_large": f"{self.image_large}",
-            "OnHome": f"{self.OnHome}"
+            "OnHome": self.OnHome
         }

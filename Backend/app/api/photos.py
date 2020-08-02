@@ -6,6 +6,4 @@ from flask.views import MethodView
 from werkzeug.exceptions import abort
 from ..models.Photos import Photo
 
-
 photooapi = Blueprint('photoapi', __name__, url_prefix='/photo')
-

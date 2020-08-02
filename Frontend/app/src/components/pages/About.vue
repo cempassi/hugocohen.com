@@ -1,13 +1,15 @@
 <template>
-  <main class="content">
-    <video class="vid" autoplay loop muted playsinline>
-      <source type="video/mp4" src="@/assets/about.mp4" />Video isn't working
-    </video>
-    <div class="links">
-      <a :href="mail.link" class="link">Mail</a>
-      <a :href="insta.link" class>Instagram</a>
+  <main >
+    <div class="content">
+      <video class="vid" autoplay loop muted playsinline>
+        <source type="video/mp4" src="@/assets/about.mp4" />Video isn't working
+      </video>
+      <div class="links">
+        <a :href="mail.link" class="link">Mail</a>
+        <a :href="insta.link" class>Instagram</a>
+      </div>
+      <p class="text">{{about.about}}</p>
     </div>
-    <p class="text">{{about.about}}</p>
   </main>
 </template>
 
@@ -19,7 +21,12 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import About from "@/models/About";
 import { AboutAPI } from "@/api/AboutAPI";
 
-@Component
+@Component({
+  name: "About",
+  metaInfo: {
+    title: "About",
+  },
+})
 export default class AboutView extends Vue {
   private about: About = { id: 0, about: "" };
   private insta: object = {
@@ -117,7 +124,7 @@ a {
 
   .vid {
     width: 50%;
-    height: 50%;
+    height: 25%;
     object-fit: contain;
   }
 }

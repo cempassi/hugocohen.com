@@ -1,52 +1,49 @@
 <template>
   <main class="wrapper">
-    <div class="parent"  @keyup.esc="stopping">
-      <template v-for="video in videos">
-        <div class="video_wrapper" :key="video.id">
-			<DisplayVideo :video="video" :home="true"/>
-        </div>
-      </template>
+    <div class="parent" @keyup.esc="stopping">
+      <div class="video_wrapper" v-if="id !== -1">
+        <DisplayVideo :id="id" :home="true" />
+      </div>
     </div>
   </main>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import Video from "@/models/Videos";
 import { VideoAPI } from "@/api/VideoAPI";
-import DisplayVideo  from "@/components/pages/DisplayVideo.vue";
+import DisplayVideo from "@/components/pages/DisplayVideo.vue";
 
-@Component({
-	components: { DisplayVideo}
+@Component<Home>({
+  name: "Home",
+  metaInfo: {
+    title: "Home",
+  },
+  components: { DisplayVideo },
 })
 export default class Home extends Vue {
-  private videos: Video[] = [];
-  private play = false;
-  private current = 0;
-
-  async mounted(): Promise<void> {
-    this.videos = await VideoAPI.getHomeVideos();
+  async created() {
+    await this.$store
+      .dispatch("fetchVideos")
+      .then((res) => console.log("fetching sent"));
   }
 
-  playing(e: Event, id: number) {
-    if (id >= 1) {
-      this.play = !this.play;
-      this.current = id;
+  get videos() {
+    return this.$store.state.videos;
+  }
+
+  @Watch("$store.state.videos")
+  update() {
+    console.log(this.$store.state.videos);
+  }
+
+  get id() {
+    const videos = this.videos;
+    if (videos.length !== 0) {
+      return videos.find((video: Video) => video.OnHome).id;
     } else {
-      this.play = false;
-      this.current = 0;
+      return -1;
     }
-  }
-
-  stopping(e: Event) {
-      this.current = 0;
-      this.play = false;
-      console.log("stopping");
-  }
-
-  runvideo(): string {
-    const iframe = document.createElement("div");
-    return iframe.innerHTML;
   }
 }
 </script>
@@ -61,7 +58,7 @@ export default class Home extends Vue {
   height: 100%;
   width: 100%;
   text-decoration: none;
-  }
+}
 
 .parent {
   height: 90%;

@@ -1,18 +1,17 @@
 <template>
-  <main class="main-wrapper">
-    <div v-if="photoOn == false">
-      <transition-group name="fade" class="album-container">
-        <div class="grid-item" v-for="album in active" :key="album.id">
-          <div class="image-container">
-            <router-link :to="'/photo/' + album.id">
-              <img :src="cover(album.photos)" @click="handler($event, album.id)" />
-            </router-link>
-          </div>
-          <p class="title">{{album.name}}</p>
+  <main>
+	<div class="main-wrapper">
+    <transition-group name="fade" class="album-container">
+      <div class="grid-item" v-for="album in active" :key="album.id">
+        <div class="image-container">
+          <router-link :to="'/photo/' + album.name">
+            <img :src="cover(album.photos)" />
+          </router-link>
         </div>
-      </transition-group>
-    </div>
-    <router-view v-else :photos="photos"></router-view>
+        <p class="title">{{album.name}}</p>
+      </div>
+    </transition-group>
+	</div>
   </main>
 </template>
 
@@ -22,15 +21,21 @@ import Album from "@/models/Albums";
 import Photo from "@/models/Photos";
 import { AlbumAPI } from "@/api/AlbumAPI";
 
-@Component
+@Component({
+  name: "Photos",
+  metaInfo: {
+    title: "Photos",
+  },
+})
 export default class AlbumView extends Vue {
-  private albums: Album[] = [];
-  private photoOn = false;
-  private albumId = 0;
   private inactive = 0;
 
-  async mounted(): Promise<void> {
-    this.albums = await AlbumAPI.getAllAlbums();
+  created() {
+    this.$store.dispatch("fetchAlbums");
+  }
+
+  get albums() {
+    return this.$store.state.albums;
   }
 
   get host() {
@@ -42,10 +47,6 @@ export default class AlbumView extends Vue {
     return this.albums.filter((album: Album) => album.active);
   }
 
-  get photos() {
-    return this.albums.find((album) => album.id == this.albumId)?.photos;
-  }
-
   cover(photos: Photo[]) {
     const photo = photos.find((x: Photo) => x.cover);
     if (photo) {
@@ -55,29 +56,6 @@ export default class AlbumView extends Vue {
 
   randomIndex() {
     return Math.floor(Math.random() * this.albums.length);
-  }
-
-  handler(e: Event, albumId: number) {
-    this.currentAlbum(albumId);
-    this.togglephoto(e);
-  }
-
-  currentAlbum(albumId: number) {
-    this.albumId = albumId;
-  }
-
-  togglephoto(e: Event) {
-    e.stopPropagation(); // this will stop propagation of this event to upper level
-    this.photoOn = !this.photoOn;
-    if (this.photoOn) {
-      window.addEventListener("click", () => {
-        this.photoOn = false;
-      });
-    } else {
-      window.removeEventListener("click", () => {
-        this.photoOn = false;
-      });
-    }
   }
 }
 </script>
@@ -148,7 +126,7 @@ export default class AlbumView extends Vue {
   .main-wrapper {
     //overflow-y: scroll;
     //width: auto;
-		justify-content: center;
+    justify-content: center;
   }
 
   .album-container {
@@ -169,7 +147,7 @@ export default class AlbumView extends Vue {
     align-items: center;
     justify-content: center;
     scroll-snap-align: center;
-		padding: 2vw;
+    padding: 2vw;
   }
 
   .image-container {

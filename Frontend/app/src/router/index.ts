@@ -10,6 +10,7 @@ import DisplayPhoto from "@/components/pages/DisplayPhoto.vue";
 Vue.use(Router);
 
 export default new Router({
+  mode: "history",
   routes: [
     {
       path: "/",
@@ -64,22 +65,20 @@ export default new Router({
           },
         ],
       },
-      children: [
-        {
-          path: "/photo/:id",
-          name: "Display Photo",
-          component: DisplayPhoto,
-          meta: {
-            title: "Photos - Hugo Cohen",
-            metaTags: [
-              {
-                name: "description",
-                content: "A photo album of Hugo Cohen.",
-              },
-            ],
+    },
+    {
+      path: "/photo/:name",
+      name: "Display Photo",
+      component: DisplayPhoto,
+      meta: {
+        title: "Photos - Hugo Cohen",
+        metaTags: [
+          {
+            name: "description",
+            content: "A photo album of Hugo Cohen.",
           },
-        },
-      ],
+        ],
+      },
     },
     {
       path: "/video",
@@ -98,22 +97,21 @@ export default new Router({
           },
         ],
       },
-      children: [
-        {
-          path: "/video/:id",
-          name: "Display Video",
-          component: DisplayVideo,
-          meta: {
-            title: "Video - Hugo Cohen'",
-            metaTags: [
-              {
-                name: "description",
-                content: "A Video by Hugo Cohen.",
-              },
-            ],
+    },
+    {
+      path: "/video/:id",
+      name: "Display Video",
+      props: true,
+      component: DisplayVideo,
+      meta: {
+        title: "Video - Hugo Cohen'",
+        metaTags: [
+          {
+            name: "description",
+            content: "A Video by Hugo Cohen.",
           },
-        },
-      ],
+        ],
+      },
     },
   ],
 });

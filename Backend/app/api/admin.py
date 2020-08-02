@@ -41,7 +41,6 @@ class LoginForm(form.Form):
     def get_admin(self):
         return db.session.query(Administrator).filter_by(login=self.login.data).first()
 
-
 class MyAdminIndexView(admin.AdminIndexView):
 
     @expose('/', methods=('GET', 'POST'))

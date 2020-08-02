@@ -1,9 +1,9 @@
 <template>
   <main>
     <div class="wrapper">
-      <div v-if="dataready" class="video_wrapper" :key="video.id">
+      <div class="video_wrapper" :key="video.id">
         <iframe
-          ref="frame"
+          ref="aFrame"
           class="video"
           :src="link + '?autoplay=1&autopause=1&loop=1&muted=1'"
           frameborder="0"
@@ -22,43 +22,47 @@ import { Component, Prop, Vue, Emit, Ref, Watch } from "vue-property-decorator";
 import Video from "@/models/Videos";
 import { VideoAPI } from "@/api/VideoAPI";
 
-const passVideo = Vue.extend({
-  props: {
-    //video: Video,
-  },
-});
-
-@Component({})
-export default class DisplayVideo extends passVideo {
-  private dataready = false;
-
-  @Prop(Video) video!: Video | undefined;
+@Component({
+  name: "DisplayVideo",
+  metaInfo: {},
+})
+export default class DisplayVideo extends Vue {
   @Prop({ default: false }) readonly home!: boolean;
+  @Prop() readonly id!: number;
+  @Ref("aFrame") readonly frame!: HTMLIFrameElement;
 
-  @Ref("frame") readonly frame!: HTMLIFrameElement;
+  //public $refs: Vue["$refs"] & { aFrame: HTMLIFrameElement };
 
-  @Emit()
-  videoOff() {
-    return false;
+  metaInfo() {
+    return {
+      title: `${this.video?.name} | Hugo Cohen `,
+      meta: [
+        {
+          name: this.video?.name,
+        },
+      ],
+    };
   }
 
-  async mounted(): Promise<void> {
-    if (!this.video) {
-      this.video = await VideoAPI.getOneVideo(this.$route.params.id);
-    }
-    this.dataready = true;
+  get video() {
+    const id = this.id;
+    return this.$store.state.videos.find((video: Video) => video.id == id);
+  }
+
+  mounted() {
     if (this.home == false) {
       this.$nextTick(() => {
-        this.frame.requestFullscreen();
+        (this.$refs.aFrame as HTMLIFrameElement).requestFullscreen();
       });
     }
   }
-	get link() {
-		if (this.video?.host == 'vimeo') {
-			return 'https://player.vimeo.com' + this.video?.uri
-		}
-		return 'https://www.youtube.com/embed/' + this.video?.uri
-	}
+
+  get link() {
+    if (this.video.host == "vimeo") {
+      return "https://player.vimeo.com" + this.video.uri;
+    }
+    return "https://www.youtube.com/embed/" + this.video.uri;
+  }
 }
 </script>
 

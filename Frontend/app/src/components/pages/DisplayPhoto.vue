@@ -11,16 +11,26 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import Photo from "@/models/Photos";
+import Album from "@/models/Albums";
 
 @Component
 export default class DisplayPhoto extends Vue {
-  @Prop() readonly photos: Photo[] | undefined;
   private index = 0;
   private ScrollStatus = 0;
   private ScrollMax = 0;
 
   get host() {
     return process.env.VUE_APP_API_URL + "/static/images/";
+  }
+
+  created() {
+    this.$store.dispatch("fetchAlbums");
+  }
+
+  get photos() {
+    const name = this.$route.params.name;
+    const albums: Album[] = this.$store.state.albums;
+    return albums.find((e: Album) => e.name === name)?.photos;
   }
 
   get photoUri() {
@@ -56,45 +66,91 @@ export default class DisplayPhoto extends Vue {
 </script>
 
 <style scoped lang="scss">
-.main-wrapper {
-  height: 100vh;
-  width: 100%;
+@media only screen and (min-width: 769px) {
+  .main-wrapper {
+    height: 100vh;
+    width: 100%;
 
-  &-start {
-    //padding-left: 1rem;
+    &-start {
+      //padding-left: 1rem;
+    }
+    &-middle {
+      //padding: 0px;
+    }
+    &-end {
+      //padding-right: 1rem;
+    }
   }
-  &-middle {
-    //padding: 0px;
+
+  .img-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+    height: 80vh;
+    width: auto;
+    scroll-snap-type: x mandatory;
   }
-  &-end {
-    //padding-right: 1rem;
+
+  img {
+    height: 60vh;
+    width: auto;
+    padding: 0% 1vh;
+    object-fit: contain;
+    scroll-snap-align: center;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
   }
 }
 
-.img-container {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  align-content: center;
-  align-items: center;
-  height: 80vh;
-  width: auto;
-  scroll-snap-type: x mandatory;
-}
+@media only screen and (max-width: 768px) {
+  .main-wrapper {
+    height: 100vh;
+    width: 100%;
 
-img {
-  height: 60vh;
-  width: auto;
-  padding: 0% 1vh;
-  object-fit: contain;
-  scroll-snap-align: center;
-}
+    &-start {
+      //padding-left: 1rem;
+    }
+    &-middle {
+      //padding: 0px;
+    }
+    &-end {
+      //padding-right: 1rem;
+    }
+  }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+  .img-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+	flex-direction: column;
+    height: auto;
+    width: 100%;
+  }
+
+  img {
+    height: auto;
+    width: 100%;
+	justify-items: center;
+    object-fit: contain;
+    scroll-snap-align: center;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
 }
 </style>
