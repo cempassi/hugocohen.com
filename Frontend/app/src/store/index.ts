@@ -20,9 +20,6 @@ export default new Vuex.Store({
     SAVE_VIDEOS(state, videos) {
       state.videos = videos;
     },
-    IS_LOADED(state, bool) {
-      state.loaded = bool;
-    },
   },
   actions: {
     async fetchAlbums({ commit }) {
@@ -35,7 +32,6 @@ export default new Vuex.Store({
     async fetchVideos(context) {
       return await VideoAPI.getAllVideos().then((result) => {
         context.commit("SAVE_VIDEOS", result);
-        context.commit("IS_LOADED", true);
       });
     },
   },

@@ -23,18 +23,11 @@ import DisplayVideo from "@/components/pages/DisplayVideo.vue";
 })
 export default class Home extends Vue {
   async created() {
-    await this.$store
-      .dispatch("fetchVideos")
-      .then((res) => console.log("fetching sent"));
+    await this.$store.dispatch("fetchVideos");
   }
 
   get videos() {
     return this.$store.state.videos;
-  }
-
-  @Watch("$store.state.videos")
-  update() {
-    console.log(this.$store.state.videos);
   }
 
   get id() {
