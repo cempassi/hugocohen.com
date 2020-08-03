@@ -1,6 +1,6 @@
-import PhotoDTO from "@/models/Photos";
+import Photo, { PhotoDTO } from "@/models/Photos";
 
-type PhotoSet = PhotoDTO[];
+type PhotoSet = Photo[];
 
 export interface InterfaceAlbum {
   id: number;
@@ -12,20 +12,21 @@ export interface InterfaceAlbum {
 export class AlbumDTO implements InterfaceAlbum {
   id = 0;
   name = "";
-  photos = [{ id: 0, filename: "", album: "", cover: false }];
+  photos = Array<Photo>();
   active = true;
 }
 
 export default class Album extends AlbumDTO {
-  constructor(dto: AlbumDTO, photos: string) {
+  constructor(dto: AlbumDTO) {
     super();
     this.id = dto.id;
     this.name = dto.name;
-    this.photos = JSON.parse(photos);
+    const photo = JSON.parse((dto.photos as unknown) as string);
+    photo.forEach((pic: PhotoDTO) => this.photos.push(new Photo(pic)));
     this.active = dto.active;
   }
 
-  static create(dto: InterfaceAlbum, photos: string): Album {
-    return new Album(dto, photos);
+  static create(dto: InterfaceAlbum): Album {
+    return new Album(dto);
   }
 }

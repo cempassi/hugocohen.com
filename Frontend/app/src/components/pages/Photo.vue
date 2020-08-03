@@ -1,17 +1,21 @@
 <template>
   <main>
-	<div class="main-wrapper">
-    <transition-group name="fade" class="album-container">
-      <div class="grid-item" v-for="album in active" :key="album.id">
-        <div class="image-container">
-          <router-link :to="'/photo/' + album.name">
-            <img :src="cover(album.photos)" />
-          </router-link>
+    <div class="main-wrapper">
+      <transition-group name="fade" class="album-container">
+        <div class="grid-item" v-for="album in albums" :key="album.id">
+          <div class="image-container">
+            <router-link
+              :to="{name: 'DisplayPhoto', params:
+                {albumName: album.name, id: album.id}}"
+              :id="album.id"
+            >
+              <img :src="cover(album.photos[0])" />
+            </router-link>
+          </div>
+          <p class="title">{{album.name}}</p>
         </div>
-        <p class="title">{{album.name}}</p>
-      </div>
-    </transition-group>
-	</div>
+      </transition-group>
+    </div>
   </main>
 </template>
 
@@ -28,30 +32,23 @@ import { AlbumAPI } from "@/api/AlbumAPI";
   },
 })
 export default class AlbumView extends Vue {
-  private inactive = 0;
-
   created() {
-    this.$store.dispatch("fetchAlbums");
+    this.$store.dispatch("fetchAlbumsCover");
   }
 
   get albums() {
-    return this.$store.state.albums;
+    return this.$store.state.albumsCover;
   }
 
   get host() {
     return process.env.VUE_APP_API_URL + "/static/images/";
   }
 
-  get active() {
-    this.inactive = this.albums.filter((album: Album) => !album.active).length;
-    return this.albums.filter((album: Album) => album.active);
-  }
-
-  cover(photos: Photo[]) {
-    const photo = photos.find((x: Photo) => x.cover);
+  cover(photo: Photo) {
+    console.log(photo);
     if (photo) {
       return this.host + photo.filename;
-    } else return this.host + photos[0].filename;
+    } else return this.host;
   }
 
   randomIndex() {

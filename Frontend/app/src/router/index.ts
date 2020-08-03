@@ -67,9 +67,10 @@ export default new Router({
       },
     },
     {
-      path: "/photo/:name",
-      name: "Display Photo",
+      path: "/photo/:albumName",
+      name: "DisplayPhoto",
       component: DisplayPhoto,
+      props: true,
       meta: {
         title: "Photos - Hugo Cohen",
         metaTags: [

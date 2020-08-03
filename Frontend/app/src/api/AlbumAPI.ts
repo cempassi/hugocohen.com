@@ -13,8 +13,7 @@ export abstract class AlbumAPI {
         },
       }
     );
-    const photos = response.data[0].photos;
-    return new Album(response.data as AlbumDTO, photos);
+    return new Album(response.data as AlbumDTO);
   }
 
   static async getAllAlbums(): Promise<Album[]> {
@@ -28,9 +27,20 @@ export abstract class AlbumAPI {
     );
     return response.data
       .filter((albumDto: AlbumDTO) => albumDto.active)
-      .map(
-        (albumDto: AlbumDTO) =>
-          new Album(albumDto, response.data[albumDto.id - 1].photos)
-      );
+      .map((albumDto: AlbumDTO) => new Album(albumDto));
+  }
+
+  static async getAllAlbumsCover(): Promise<Album[]> {
+    const response = await this.albumAxios.get(
+      process.env.VUE_APP_API_URL + "/album/cover",
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+    return response.data
+      .filter((albumDto: AlbumDTO) => albumDto.active)
+      .map((albumDto: AlbumDTO) => new Album(albumDto));
   }
 }

@@ -26,3 +26,11 @@ class Album(db.Model):
             "photos": json.dumps([i.serialize() for i in self.photos]),
             "active": self.active,
         }
+
+    def serialize_cover(self):
+        return {
+            "id": self.id,
+            "name": f"{self.name}",
+            "photos": json.dumps([i.serialize() for i in self.photos if i.cover]),
+            "active": self.active,
+        }

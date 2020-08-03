@@ -15,6 +15,7 @@ import Album from "@/models/Albums";
 
 @Component
 export default class DisplayPhoto extends Vue {
+  @Prop() id!: number;
   private index = 0;
   private ScrollStatus = 0;
   private ScrollMax = 0;
@@ -24,21 +25,17 @@ export default class DisplayPhoto extends Vue {
   }
 
   created() {
-    this.$store.dispatch("fetchAlbums");
+    console.log(this.id);
+    this.$store.dispatch("fetchAlbums", this.id);
   }
 
   get photos() {
-    const name = this.$route.params.name;
     const albums: Album[] = this.$store.state.albums;
-    return albums.find((e: Album) => e.name === name)?.photos;
+    return albums.find((e: Album) => e.id === this.id)?.photos;
   }
 
   get photoUri() {
     return this.photos?.map((photo) => this.host + photo.filename);
-  }
-
-  onClick(i: number) {
-    this.index = i;
   }
 
   randomIndex() {
@@ -132,7 +129,7 @@ export default class DisplayPhoto extends Vue {
     justify-content: flex-start;
     align-content: center;
     align-items: center;
-	flex-direction: column;
+    flex-direction: column;
     height: auto;
     width: 100%;
   }
@@ -140,7 +137,7 @@ export default class DisplayPhoto extends Vue {
   img {
     height: auto;
     width: 100%;
-	justify-items: center;
+    justify-items: center;
     object-fit: contain;
     scroll-snap-align: center;
   }
