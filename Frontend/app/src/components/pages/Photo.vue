@@ -1,6 +1,5 @@
 <template>
   <main>
-    <div class="main-wrapper">
       <transition-group name="fade" class="album-container">
         <div class="grid-item" v-for="album in albums" :key="album.id">
           <div class="image-container">
@@ -15,7 +14,6 @@
           <p class="title">{{album.name}}</p>
         </div>
       </transition-group>
-    </div>
   </main>
 </template>
 
@@ -121,8 +119,6 @@ export default class AlbumView extends Vue {
 
 @media only screen and (max-width: 768px) {
   .main-wrapper {
-    //overflow-y: scroll;
-    //width: auto;
     justify-content: center;
   }
 
@@ -132,7 +128,7 @@ export default class AlbumView extends Vue {
     justify-content: center;
     align-content: center;
     align-items: center;
-    height: 80vh;
+    height: 100%;
     width: auto;
     padding: 1vw;
   }
@@ -159,9 +155,8 @@ export default class AlbumView extends Vue {
   }
 
   img {
-    height: 20vh;
-    width: auto;
-    padding: 0% 1vh;
+    height: auto;
+    width: 100%;
     object-fit: contain;
     scroll-snap-align: center;
   }

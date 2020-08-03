@@ -25,7 +25,6 @@ export default class DisplayPhoto extends Vue {
   }
 
   created() {
-    console.log(this.id);
     this.$store.dispatch("fetchAlbums", this.id);
   }
 

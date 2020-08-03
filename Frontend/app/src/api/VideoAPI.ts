@@ -33,7 +33,7 @@ export abstract class VideoAPI {
     return await this.videosAxios
       .get(process.env.VUE_APP_API_URL + "/video/home", {
         headers: {
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": "",
         },
       })
       .then((response) =>

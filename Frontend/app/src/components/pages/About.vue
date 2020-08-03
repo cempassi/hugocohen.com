@@ -1,5 +1,5 @@
 <template>
-  <main >
+  <main>
     <div class="content">
       <video class="vid" autoplay loop muted playsinline>
         <source type="video/mp4" src="@/assets/about.mp4" />Video isn't working
@@ -44,46 +44,54 @@ export default class AboutView extends Vue {
 }
 </script>
 <style lang="scss" scoped>
-.content {
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+@media only screen and (min-width: 769px) {
+  .content {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text {
+    text-align: justify;
+    font-size: 1em;
+    padding: 4vw;
+	line-height: 2em;
+  }
+
+  .links {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  a {
+    justify-content: space-between;
+    padding-top: 5vh;
+	padding-right: 10vw;
+	padding-left: 10vw;
+    font-size: 1.5vw;
+  }
+  .icon {
+    font-size: 1.5em;
+  }
+
+  .av {
+    grid-row-start: 2;
+    grid-row-end: 4;
+    grid-column-start: 3;
+    grid-column-end: 4;
+  }
+
+  .vid {
+	max-height: 50vh;
+	max-width: 50vw;
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+  }
 }
 
-.text {
-  text-align: justify;
-  font-size: 1.5vw;
-  padding: 4vw;
-}
-
-.links {
-  display: flex;
-  justify-content: space-between;
-}
-
-a {
-  justify-content: space-between;
-  padding: 1rem;
-  font-size: 1.5vw;
-}
-.icon {
-  font-size: 1.5em;
-}
-
-.av {
-  grid-row-start: 2;
-  grid-row-end: 4;
-  grid-column-start: 3;
-  grid-column-end: 4;
-}
-
-.vid {
-  width: 50%;
-  height: 50%;
-  object-fit: contain;
-}
 @media only screen and (max-width: 768px) {
   .content {
     height: 80%;
@@ -95,8 +103,9 @@ a {
 
   .text {
     text-align: justify;
-    font-size: 14px;
+    font-size: 1em;
     padding: 4vw;
+	line-height: 1em;
   }
 
   .links {
@@ -107,9 +116,12 @@ a {
 
   a {
     justify-content: space-between;
-    padding: 1rem;
+    padding-top: 5vh;
+	padding-right: 10vw;
+	padding-left: 10vw;
+    font-size: 1.5vw;
     font-family: Avenir, Helvetica, Arial, sans-serif;
-    font-size: 12px;
+    font-size: 1em;
   }
   .icon {
     font-size: 1.5em;

@@ -3,7 +3,7 @@
     <div class="wrapper-absolute">
       <div class="wrapper-fixed">
         <div class="title" ref="home">
-          <router-link to="/"  @click.native="reset">Hugo Cohen</router-link>
+          <router-link to="/" @click.native="reset">Hugo Cohen</router-link>
         </div>
         <div class="main-menu">
           <ul class="menu" ref="menu">
@@ -84,53 +84,61 @@ export default class Navigation extends Vue {
 </script>
 
 <style scoped lang="scss">
-.wrapper-relative {
-  position: relative;
-  width: 100vw;
-  height: 15vh;
-  margin: 0 auto;
-}
-.wrapper-absolute {
-  z-index: 1000;
-  position: absolute;
-  width: 220px;
-  position: absolute;
-  top: 0;
-}
+@media only screen and(min-width: 769px) {
+  .wrapper-relative {
+    position: relative;
+    width: 100vw;
+    height: 15vh;
+    margin: 0 auto;
+  }
+  .wrapper-absolute {
+    z-index: 1000;
+    position: absolute;
+    width: 220px;
+    position: absolute;
+    top: 0;
+  }
 
-.wrapper-fixed {
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  display: flex;
-  flex-flow: row nowrap;
-  flex-shrink: 0;
-  justify-content: space-between;
-  align-items: center;
-  background-color: white;
-}
+  .wrapper-fixed {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    flex-shrink: 0;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+  }
 
-.title {
-  margin: 45px;
-}
+  .title {
+    margin: 45px;
+    font-size: 1em;
+  }
 
-.menu {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-flow: row nowrap;
-  align-items: center;
-}
+  .menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-flow: row nowrap;
+    align-items: center;
+  }
 
-.menu-toogle {
-  display: none;
-}
+  .menu-toogle {
+    display: none;
+  }
 
-.main-menu {
-  display: flex;
-  align-items: center;
-}
+  .main-menu {
+    display: flex;
+    align-items: center;
+  }
 
+  .menu-item {
+    flex: 0 1;
+    margin: 30px;
+    font-size: 1em;
+  }
+}
 @media only screen and (max-width: 768px) {
   .wrapper-relative {
     position: relative;
@@ -159,6 +167,7 @@ export default class Navigation extends Vue {
     align-items: center;
     background-color: white;
   }
+
   body {
     overflow-x: hidden;
   }
@@ -184,10 +193,16 @@ export default class Navigation extends Vue {
     opacity: 0;
     transition: visibility 0s, opacity 0.2s;
   }
-}
 
-.menu-item {
-  flex: 0 1;
-  margin: 30px;
+  .title {
+    margin: 5vw;
+    font-size: 1em;
+  }
+
+  .menu-item {
+    flex: 0 1;
+    margin: 30px;
+    font-size: 1em;
+  }
 }
 </style>

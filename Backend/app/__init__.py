@@ -29,7 +29,7 @@ def create_app(test_config=None):
         # load the test config if passed in
         app.config.from_mapping(test_config)
 
-    CORS(app)
+    CORS(app, origins=["https://hugocohen.com", "http://localhost:8080"])
     configure_uploads(app, (images))
     patch_request_class(app)
     # initialize the database
