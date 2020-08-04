@@ -8,13 +8,13 @@
         <div class="main-menu">
           <ul class="menu" ref="menu">
             <li>
-              <router-link class="menu-item" @click.native="toggle" to="/photo">Photo</router-link>
+              <router-link class="main-menu-item" @click.native="toggle" to="/photo">Photo</router-link>
             </li>
             <li>
-              <router-link class="menu-item" @click.native="toggle" to="/video">Video</router-link>
+              <router-link class="main-menu-item" @click.native="toggle" to="/video">Video</router-link>
             </li>
             <li>
-              <router-link class="menu-item" @click.native="toggle" to="/about">About</router-link>
+              <router-link class="main-menu-item" @click.native="toggle" to="/about">About</router-link>
             </li>
           </ul>
           <div class="menu-toogle">
@@ -109,10 +109,11 @@ export default class Navigation extends Vue {
     justify-content: space-between;
     align-items: center;
     background-color: white;
+    padding-top: 3vh;
   }
 
   .title {
-    margin: 45px;
+    padding-left: 3vw;
     font-size: 1em;
   }
 
@@ -131,12 +132,12 @@ export default class Navigation extends Vue {
   .main-menu {
     display: flex;
     align-items: center;
-  }
+	padding-right: 3vw;
 
-  .menu-item {
-    flex: 0 1;
-    margin: 30px;
-    font-size: 1em;
+    &-item {
+      font-size: 1em;
+	  padding-left: 4vw;
+    }
   }
 }
 @media only screen and (max-width: 768px) {

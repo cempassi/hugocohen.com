@@ -1,14 +1,18 @@
 <template>
   <main>
     <div class="content">
-      <video class="vid" autoplay loop muted playsinline>
-        <source type="video/mp4" src="@/assets/about.mp4" />Video isn't working
-      </video>
-      <div class="links">
-        <a :href="mail.link" class="link">Mail</a>
-        <a :href="insta.link" class>Instagram</a>
+      <div class="text">
+        <p class="text-bio">{{about.about}}</p>
       </div>
-      <p class="text">{{about.about}}</p>
+      <div class="links">
+        <a :href="mail.link">Mail</a>
+        <a :href="insta.link">Instagram</a>
+      </div>
+      <div class="video">
+        <video class="video-vid" autoplay loop muted playsinline>
+          <source type="video/mp4" src="@/assets/about.mp4" />Video isn't working
+        </video>
+      </div>
     </div>
   </main>
 </template>
@@ -43,52 +47,50 @@ export default class AboutView extends Vue {
   }
 }
 </script>
+
 <style lang="scss" scoped>
 @media only screen and (min-width: 769px) {
   .content {
-    height: 80%;
+    height: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    flex-direction: row;
+    align-items: start;
+    justify-content: flex-start;
   }
 
   .text {
-    text-align: justify;
-    font-size: 1em;
-    padding: 4vw;
-	line-height: 2em;
+    width: 100%;
+
+    &-bio {
+      text-align: justify;
+      font-size: 1em;
+	  padding-left: 3vw;
+      line-height: 2em;
+    }
   }
 
   .links {
     display: flex;
-    justify-content: space-between;
-  }
-
-  a {
-    justify-content: space-between;
-    padding-top: 5vh;
-	padding-right: 10vw;
-	padding-left: 10vw;
-    font-size: 1.5vw;
-  }
-  .icon {
-    font-size: 1.5em;
-  }
-
-  .av {
-    grid-row-start: 2;
-    grid-row-end: 4;
-    grid-column-start: 3;
-    grid-column-end: 4;
-  }
-
-  .vid {
-	max-height: 50vh;
-	max-width: 50vw;
     width: 50%;
-    height: 50%;
-    object-fit: contain;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    a {
+      padding-bottom: 5vh;
+      font-size: 1em;
+    }
+  }
+
+  .video {
+	padding-right: 3vw;
+	align-self: start;
+
+    &-vid {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
   }
 }
 
@@ -105,7 +107,7 @@ export default class AboutView extends Vue {
     text-align: justify;
     font-size: 1em;
     padding: 4vw;
-	line-height: 1em;
+    line-height: 1em;
   }
 
   .links {
@@ -117,8 +119,8 @@ export default class AboutView extends Vue {
   a {
     justify-content: space-between;
     padding-top: 5vh;
-	padding-right: 10vw;
-	padding-left: 10vw;
+    padding-right: 10vw;
+    padding-left: 10vw;
     font-size: 1.5vw;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     font-size: 1em;

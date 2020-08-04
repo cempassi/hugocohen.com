@@ -5,7 +5,7 @@
         <iframe
           ref="aFrame"
           class="video"
-          :src="link + '?autoplay=1&autopause=1&loop=1&muted=1'"
+          :src="homelink"
           frameborder="0"
           allow="autoplay; fullscreen"
           allowfullscreen
@@ -55,6 +55,15 @@ export default class DisplayVideo extends Vue {
         (this.$refs.aFrame as HTMLIFrameElement).requestFullscreen();
       });
     }
+  }
+
+  get homelink(){
+	  if (this.home === true){
+		  return this.link + '?autoplay=1&autopause=1&loop=1&muted=1'
+	  }
+	  else {
+		  return this.link + '?loop=1'
+	  }
   }
 
   get link() {
