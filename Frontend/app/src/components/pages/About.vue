@@ -87,7 +87,7 @@ export default class AboutView extends Vue {
 	align-self: start;
 
     &-vid {
-      width: 100%;
+      width: 75%;
       height: auto;
       object-fit: contain;
     }
@@ -104,6 +104,7 @@ export default class AboutView extends Vue {
   }
 
   .text {
+	order: 3;
     text-align: justify;
     font-size: 1em;
     padding: 4vw;
@@ -111,6 +112,7 @@ export default class AboutView extends Vue {
   }
 
   .links {
+	order: 2;
     display: flex;
     justify-content: space-between;
     font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -136,10 +138,16 @@ export default class AboutView extends Vue {
     grid-column-end: 4;
   }
 
-  .vid {
-    width: 50%;
-    height: 25%;
-    object-fit: contain;
+  .video {
+	order: 1;
+	padding-right: 3vw;
+	align-self: start;
+
+    &-vid {
+      width: 75%;
+      height: auto;
+      object-fit: contain;
+    }
   }
 }
 </style>
