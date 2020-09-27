@@ -52,6 +52,7 @@ services:
     volumes:
       - ./Backend/app:/app/app
       - ./Backend/config/flask:/app/config
+      - ./Backend/migrations:/app/migrations
       - images:/app/app/static/images
     command : > 
         ./wait-for-it.sh 

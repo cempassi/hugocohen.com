@@ -1,18 +1,23 @@
 <template>
-  <main>
+  <main class="layout">
+    <div class="video">
+      <video class="video-vid" autoplay loop muted playsinline>
+        <source type="video/mp4" src="@/assets/about.mp4" />Video isn't working
+      </video>
+    </div>
     <div class="content">
-      <div class="text">
-        <p class="text-bio">{{about.about}}</p>
-      </div>
-      <div class="links">
-        <a :href="mail.link">Mail</a>
-        <a :href="insta.link">Instagram</a>
-      </div>
-      <div class="video">
-        <video class="video-vid" autoplay loop muted playsinline>
-          <source type="video/mp4" src="@/assets/about.mp4" />Video isn't working
-        </video>
-      </div>
+      <p class="content-bio">{{about.about}}</p>
+    </div>
+    <div class="clients">
+      <p class="clients-text">{{about.clients}}</p>
+    </div>
+    <div class="links">
+      <a :href="mail.link">
+        <font-awesome-icon :icon="mail.icon"></font-awesome-icon>
+      </a>
+      <a :href="insta.link">
+        <font-awesome-icon :icon="insta.icon"></font-awesome-icon>
+      </a>
     </div>
   </main>
 </template>
@@ -32,7 +37,7 @@ import { AboutAPI } from "@/api/AboutAPI";
   },
 })
 export default class AboutView extends Vue {
-  private about: About = { id: 0, about: "" };
+  private about: About = { id: 0, about: "", clients: "" };
   private insta: object = {
     link: "https://www.instagram.com/hugocohen",
     icon: faInstagram,
@@ -50,41 +55,61 @@ export default class AboutView extends Vue {
 
 <style lang="scss" scoped>
 @media only screen and (min-width: 769px) {
-  .content {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    justify-content: flex-start;
+  $gutter: 5vw;
+
+  .layout {
+    padding-right: $gutter;
+    padding-left: $gutter;
+
+    display: grid;
+    grid-gap: $gutter;
+    grid-template-columns: 40vw 1vw 40vw;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "video . content"
+      "clients clients clients"
+      " links links links ";
   }
 
-  .text {
+  .clients {
+    grid-area: clients;
+    justify-self: stretch;
+    text-align: center;
+
+    &-text {
+      font-style: italic;
+      font-size: 2em;
+      white-space: nowrap;
+    }
+  }
+
+  .content {
+    grid-area: content;
+    justify-self: stretch;
+    height: 100%;
     width: 100%;
 
     &-bio {
       text-align: justify;
-      font-size: 1em;
-	  padding-left: 3vw;
+      font-size: 1rem;
       line-height: 2em;
     }
   }
 
   .links {
+    grid-area: links;
     display: flex;
-    width: 50%;
-    flex-direction: column;
+    width: auto;
+    flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
-
-    a {
-      padding-bottom: 5vh;
-      font-size: 1em;
-    }
+    justify-content: space-evenly;
+    font-size: 2em;
   }
 
   .video {
-	padding-right: 3vw;
-	align-self: start;
+    grid-area: video;
+    align-self: center;
+    justify-self: center;
 
     &-vid {
       width: 75%;
@@ -104,7 +129,7 @@ export default class AboutView extends Vue {
   }
 
   .text {
-	order: 3;
+    order: 3;
     text-align: justify;
     font-size: 1em;
     padding: 4vw;
@@ -112,7 +137,7 @@ export default class AboutView extends Vue {
   }
 
   .links {
-	order: 2;
+    order: 2;
     display: flex;
     justify-content: space-between;
     font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -139,9 +164,9 @@ export default class AboutView extends Vue {
   }
 
   .video {
-	order: 1;
-	padding-right: 3vw;
-	align-self: start;
+    order: 1;
+    padding-right: 3vw;
+    align-self: start;
 
     &-vid {
       width: 75%;

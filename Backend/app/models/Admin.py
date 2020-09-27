@@ -10,6 +10,7 @@ class Administrator(db.Model):
     password = db.Column(db.String(120))
     email = db.Column(db.String(120))
     about = db.Column(db.Text())
+    clients = db.Column(db.Text())
 
     @property
     def is_authenticated(self):
@@ -33,7 +34,8 @@ class Administrator(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "about": f"{self.about}"
+            "about": f"{self.about}",
+            "clients": f"{self.clients}"
         }
 
     def init():

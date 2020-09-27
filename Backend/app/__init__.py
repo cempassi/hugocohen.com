@@ -3,11 +3,13 @@ import flask_admin as admin
 import flask_login as login
 from flask import Flask
 from flask_cors import CORS
+from flask_migrate import Migrate
 from flask_admin.contrib.sqla import ModelView
 from flask_uploads import UploadSet, IMAGES, configure_uploads, patch_request_class
 from .models import db
 
 images = UploadSet('images', IMAGES)
+migrate = Migrate()
 
 def load_user(admin_id):
     from .models.Admin import Administrator
@@ -34,6 +36,7 @@ def create_app(test_config=None):
     patch_request_class(app)
     # initialize the database
     db.init_app(app)
+    migrate.init_app(app, db)
     from .api.sync import bp as sync
     from .api.video import videoapi
     from .api.album import albumapi
@@ -56,8 +59,7 @@ def create_app(test_config=None):
     a.add_view(ImageView(Photo, db.session))
 
     with app.app_context():
-        db.create_all()  # Create database tables for our data models
-        Administrator.init()
+        #Administrator.init()
         return app
 
     # ensure the instance folder exists

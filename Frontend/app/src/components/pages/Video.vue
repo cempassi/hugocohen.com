@@ -22,8 +22,8 @@ import Video from "@/models/Videos";
 import { VideoAPI } from "@/api/VideoAPI";
 
 @Component({
-  name: "Videos",
-  metaInfo: {
+    name: "Videos",
+    metaInfo: {
     title: "Videos",
   },
 })
@@ -41,7 +41,7 @@ export default class VideoView extends Vue {
 
   videolen() {
     const videos: Array<Video> = this.$store.state.videos;
-	  console.log("Je passe par ici!");
+    console.log("Je passe par ici!");
     return videos.length;
   }
 
@@ -54,6 +54,10 @@ export default class VideoView extends Vue {
 @media only screen and (min-width: 769px) {
   $gutter: 3vw;
 
+  .main-wrapper {
+    padding-right: $gutter;
+    padding-left: $gutter;
+  }
 
   .link {
     height: 100%;
@@ -65,15 +69,13 @@ export default class VideoView extends Vue {
     display: grid;
     height: 100%;
     width: 100%;
-    grid-auto-columns: minmax(450px, calc(40%));
-    grid-template-rows: repeat(4, minmax(250px, 50%));
+    grid-template-columns: repeat(3, minmax(450px, calc(40%)));
+	grid-auto-rows: minmax(250px, 60%);
     grid-gap: $gutter / 2;
-    grid-auto-flow: column;
+    grid-auto-flow: row;
     align-content: start;
-    padding-left: $gutter;
-    padding-right: $gutter;
 
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
