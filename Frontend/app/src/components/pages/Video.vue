@@ -22,8 +22,8 @@ import Video from "@/models/Videos";
 import { VideoAPI } from "@/api/VideoAPI";
 
 @Component({
-    name: "Videos",
-    metaInfo: {
+  name: "Videos",
+  metaInfo: {
     title: "Videos",
   },
 })
@@ -41,7 +41,6 @@ export default class VideoView extends Vue {
 
   videolen() {
     const videos: Array<Video> = this.$store.state.videos;
-    console.log("Je passe par ici!");
     return videos.length;
   }
 
@@ -50,6 +49,7 @@ export default class VideoView extends Vue {
   }
 }
 </script>
+
 <style scoped lang="scss">
 @media only screen and (min-width: 769px) {
   $gutter: 3vw;
@@ -69,13 +69,14 @@ export default class VideoView extends Vue {
     display: grid;
     height: 100%;
     width: 100%;
-    grid-template-columns: repeat(3, minmax(450px, calc(40%)));
-	grid-auto-rows: minmax(250px, 60%);
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 20vh;
     grid-gap: $gutter / 2;
     grid-auto-flow: row;
     align-content: start;
 
     overflow-y: hidden;
+    overflow-x: hidden;
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
@@ -96,30 +97,30 @@ export default class VideoView extends Vue {
       -webkit-filter: grayscale(80%);
     }
   }
-}
 
-.name {
-  opacity: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  color: white;
-  font-size: 1em;
-  &:hover {
-    transition: opaticy 0.9s ease-in-out;
-    opacity: 1;
+  .name {
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-size: 1em;
+    &:hover {
+      transition: opaticy 0.9s ease-in-out;
+      opacity: 1;
+    }
   }
-}
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1s;
-}
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 1s;
+  }
 
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -134,8 +135,8 @@ export default class VideoView extends Vue {
 
   .work_item {
     display: flex;
-    height: 30vh;
-    width: 90vw;
+    height: 100%;
+    width: 100%;
     justify-content: center;
     align-items: center;
     background-size: contain;

@@ -75,11 +75,15 @@ export default class AboutView extends Vue {
     grid-area: clients;
     justify-self: stretch;
     text-align: center;
+	padding-top: 10vh;
+	padding-left: 20vw;
+	padding-right: 20vw;
 
     &-text {
       font-style: italic;
-      font-size: 2em;
-      white-space: nowrap;
+      font-size: 1.5em;
+	  text-align: justify-center;
+      white-space: wrap;
     }
   }
 
@@ -90,14 +94,17 @@ export default class AboutView extends Vue {
     width: 100%;
 
     &-bio {
-      text-align: justify;
       font-size: 1rem;
       line-height: 2em;
+	padding-right: 10vw;
     }
   }
 
   .links {
     grid-area: links;
+	width: 100%;
+	padding-left:25vw;
+	padding-right:25vw;
     display: flex;
     width: auto;
     flex-direction: row;
@@ -110,6 +117,7 @@ export default class AboutView extends Vue {
     grid-area: video;
     align-self: center;
     justify-self: center;
+	padding-left: 8vw;
 
     &-vid {
       width: 75%;
