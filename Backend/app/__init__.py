@@ -3,7 +3,7 @@ import flask_admin as admin
 import flask_login as login
 from flask import Flask
 from flask_cors import CORS
-from flask_migrate import Migrate
+from flask_migrate import Migrate, MigrateCommand
 from flask_admin.contrib.sqla import ModelView
 from flask_uploads import UploadSet, IMAGES, configure_uploads, patch_request_class
 from .models import db
@@ -58,19 +58,13 @@ def create_app(test_config=None):
     a.add_view(AlbumView(Album, db.session))
     a.add_view(ImageView(Photo, db.session))
 
-    with app.app_context():
-        #Administrator.init()
-        return app
-
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World, we are running live!'
-
-    return app
+    # Init administrator if not present
+    with app.app_context():
+        #Administrator.init()
+        return app

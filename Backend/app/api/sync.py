@@ -27,6 +27,8 @@ def add_items(data) -> dict:
                 video['image_small']: str = picture['link']
             elif picture['width'] == 960:
                 video['image_large'] = picture['link']
+            else:
+                video['image_large'] = picture['link']
         updater = Video(name=video['name'],
                         link=video['link'],
                         uri=video['uri'],

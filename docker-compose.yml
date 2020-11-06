@@ -54,18 +54,7 @@ services:
       - ./Backend/config/flask:/app/config
       - ./Backend/migrations:/app/migrations
       - images:/app/app/static/images
-    command : > 
-        ./wait-for-it.sh 
-          db:3306
-          --strict 
-          --timeout=300
-          -- 
-          gunicorn --reload 
-          --bind 0.0.0.0:5000 
-          --capture-output 
-          --enable-stdio-inheritance 
-          --timeout 3000
-          app.wsgi:app
+    entrypoint: /app/entrypoint.sh
     networks:
       - web_net
     stdin_open: true

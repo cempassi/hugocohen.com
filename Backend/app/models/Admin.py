@@ -3,7 +3,6 @@ import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 
-
 class Administrator(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String(80), unique=True)

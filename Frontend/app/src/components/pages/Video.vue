@@ -1,18 +1,14 @@
 <template>
-  <main class="main-wrapper full">
-    <transition-group name="fade" class="work_display">
-      <template v-for="video in videos">
-        <div
-          v-bind:style="{'background-image': 'url(' + video.image_small + ')'}"
-          :key="video.id"
-          class="work_item"
-        >
-          <router-link class="link" :to="'/video/' + video.id" :id="video.id">
-            <div class="name">{{ video.name }}</div>
-          </router-link>
-        </div>
-      </template>
-    </transition-group>
+  <main class="lines">
+    <div v-for="line in lines" :key="line.nb" class="line">
+      <div v-for="video in line.videos" :key="video.id">
+        <router-link class="link" :to="'/video/' + video.id" :id="video.id">
+          <div class="img-wrapper">
+            <img :src="video.image_small" />
+          </div>
+        </router-link>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -43,6 +39,23 @@ export default class VideoView extends Vue {
     const videos: Array<Video> = this.$store.state.videos;
     return videos.length;
   }
+  get lines() {
+    const videos: Array<Video> = this.$store.state.videos;
+    const pack: Array<{}> = [];
+    for (let i = 0, nb = 0; i < videos.length; i += 3, nb++) {
+      let control = 0;
+      const line: { nbr: number; videos: Array<Video> } = {
+        nbr: nb,
+        videos: [],
+      };
+      control = i < videos.length ? line.videos.push(videos[i]) : -1;
+      control = i + 1 < videos.length ? line.videos.push(videos[i + 1]) : -1;
+      control = i + 2 < videos.length ? line.videos.push(videos[i + 2]) : -1;
+      pack.push(line);
+      if (control < 0) break;
+    }
+    return pack;
+  }
 
   randomIndex() {
     return Math.floor(Math.random() * this.videolen());
@@ -54,9 +67,19 @@ export default class VideoView extends Vue {
 @media only screen and (min-width: 769px) {
   $gutter: 3vw;
 
-  .main-wrapper {
+  .lines {
     padding-right: $gutter;
     padding-left: $gutter;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .line {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+		align-items: center;
   }
 
   .link {
@@ -65,37 +88,15 @@ export default class VideoView extends Vue {
     text-decoration: none;
   }
 
-  .work_display {
-    display: grid;
-    height: 100%;
-    width: 100%;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 20vh;
-    grid-gap: $gutter / 2;
-    grid-auto-flow: row;
-    align-content: start;
-
-    overflow-y: hidden;
-    overflow-x: hidden;
-    overflow: -moz-scrollbars-none;
-    -ms-overflow-style: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
+  .img-wrapper {
+		display: block;
+  	height: 62.5%;
+    overflow: hidden;
   }
 
-  .work_item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-size: cover;
-    flex-direction: column;
-    background-position: center;
-    &:hover {
-      transition: filter 0.5s ease-in-out;
-      filter: gray;
-      -webkit-filter: grayscale(80%);
-    }
+  .image-wrapper img {
+    position:absolute;
+		object-fit: scale-down;
   }
 
   .name {

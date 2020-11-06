@@ -17,6 +17,8 @@ RUN apk add tiff-dev build-base mariadb-dev libffi-dev git libjpeg-turbo-dev zli
 
 RUN pip install remote-pdb pdbpp
 
+COPY ./entrypoint.sh /app/entrypoint.sh
+RUN chmod 777 /app/entrypoint.sh
 COPY ./app /app/app
 EXPOSE 5000
 
@@ -24,4 +26,4 @@ ENV PYTHONUNBUFFERED=1
 
 #ENTRYPOINT ["python"]
 
-CMD [ "./app/app.py" ]
+#CMD [ "./app/app.py" ]
