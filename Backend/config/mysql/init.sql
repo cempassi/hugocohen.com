@@ -1,0 +1,4 @@
+CREATE DATABASE website;
+CREATE USER 'hugoweb'@'%' IDENTIFIED BY 'titi1234';
+GRANT ALL PRIVILEGES ON website.* TO 'hugoweb'@'%';
+FLUSH PRIVILEGES;

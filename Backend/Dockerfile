@@ -23,7 +23,3 @@ COPY ./app /app/app
 EXPOSE 5000
 
 ENV PYTHONUNBUFFERED=1
-
-#ENTRYPOINT ["python"]
-
-#CMD [ "./app/app.py" ]
