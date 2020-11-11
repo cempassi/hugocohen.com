@@ -22,19 +22,10 @@ def add_items(data) -> dict:
         video['name']: str = info['name']
         video['link']: str = info['link']
         video['uri']: str = info['uri'].replace('/videos/', '/video/')
-        for picture in info['pictures']['sizes']:
-            if picture['width'] == 640:
-                video['image_small']: str = picture['link']
-            elif picture['width'] == 960:
-                video['image_large'] = picture['link']
-            else:
-                video['image_large'] = picture['link']
         updater = Video(name=video['name'],
                         link=video['link'],
                         uri=video['uri'],
                         host='vimeo',
-                        image_small=video['image_small'],
-                        image_large=video['image_large'],
                         OnHome=False
                         )
         db.session.add(updater)

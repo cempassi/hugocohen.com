@@ -28,7 +28,7 @@ log = logging.getLogger("flask-admin.sqla")
 
 def _imagename_gen(ob, video):
     uid = uuid.uuid1()
-    with Image.open(video.image) as image:
+    with Image.open(video) as image:
         imagename = secure_filename(f"{uid}.{image.format}".lower())
     return imagename
         
@@ -36,17 +36,17 @@ def _imagename_gen(ob, video):
 class VideoView(ModelView):
 
     column_list = [
-        'name', 'link', 'host', 'uri', 'image', 'OnHome'
+        'name', 'link', 'host', 'uri', 'OnHome'
     ]
 
-    upload = ImageUploadField('Image', base_path="app/static/images/video",
+    form_extra_fields = {
+            'image': ImageUploadField('Image',
+            base_path='/app/static/images/video',
             url_relative_path="/static/video/images/",
             namegen=_imagename_gen,
             thumbnail_size=(400, 300, 1))
-
-    form_overrides = {
-            'image' : ImageUploadField
             }
+
 
     def is_accessible(self):
         return login.current_user.is_authenticated

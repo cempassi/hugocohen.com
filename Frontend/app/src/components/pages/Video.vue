@@ -1,7 +1,7 @@
 <template>
   <main class="lines">
     <div v-for="line in lines" :key="line.nb" class="line">
-      <div v-for="video in line.videos" :key="video.id">
+      <div v-for="video in line.videos" :key="video.id" >
         <router-link class="link" :to="'/video/' + video.id" :id="video.id">
           <div class="img-wrapper">
             <img :src="video.image_small" />
@@ -79,7 +79,7 @@ export default class VideoView extends Vue {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-evenly;
-		align-items: center;
+    align-items: center;
   }
 
   .link {
@@ -89,14 +89,19 @@ export default class VideoView extends Vue {
   }
 
   .img-wrapper {
-		display: block;
-  	height: 62.5%;
+    width: 100%;
     overflow: hidden;
+    margin: 0;
+    padding-top: 56.25%;
+    position: relative;
   }
 
   .image-wrapper img {
-    position:absolute;
-		object-fit: scale-down;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
   }
 
   .name {

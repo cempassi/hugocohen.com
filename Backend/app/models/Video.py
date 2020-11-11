@@ -1,4 +1,6 @@
+import os
 import uuid
+from sqlalchemy import event
 from . import db
 
 
@@ -8,11 +10,9 @@ class Video(db.Model):
     link = db.Column(db.String(125), name="link", unique=True, nullable=False)
     host = db.Column(db.String(80), name="host", nullable=False)
     uri = db.Column(db.String(125), name="uri", unique=True, nullable=False)
-    image_small = db.Column(db.String(125), name="image_small",
-                            unique=True, nullable=False)
-    image_large = db.Column(db.String(125), name="image_large",
-                            unique=True, nullable=False)
+    image = db.Column(db.String(128), name="image", default="", nullable=True)
     OnHome = db.Column(db.Boolean, name="OnHome", default=False, nullable=False)
+    Temp = db.Column(db.Boolean, name="Temp", default=False, nullable=False)
 
     @property
     def is_authenticated(self):
@@ -31,7 +31,14 @@ class Video(db.Model):
             "host": f"{self.host}",
             "link": f"{self.link}",
             "uri": f"{self.uri}",
-            "image_small": f"{self.image_small}",
-            "image_large": f"{self.image_large}",
+            "image": f"{self.image}",
             "OnHome": self.OnHome
         }
+
+@event.listens_for(Video, 'after_delete')
+def del_image(mapper, connection, target):
+    if target.filepath is not None:
+        try:
+            os.remove(target.filepath)
+        except OSError:
+            pass

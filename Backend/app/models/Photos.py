@@ -6,7 +6,6 @@ from . import db
 from .. import images
 from .Albums import Album
 
-
 class Photo(db.Model):
     id = db.Column(db.Integer, unique=True, primary_key=True)
     filename = db.Column(db.String(128), name="filename",

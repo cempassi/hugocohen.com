@@ -40,12 +40,17 @@ def create_app(test_config=None):
     from .api.sync import bp as sync
     from .api.video import videoapi
     from .api.album import albumapi
-    from .models.modelviews import MyModelView, ImageView, AlbumView
-    from .models.Video import Video
+
     from .models.Admin import Administrator
+    from .views.AdminView import AdminView
+    from .models.Video import Video
+    from .views.VideoView import VideoView
     from .models.Photos import Photo
+    from .views.PhotoView import PhotoView
     from .models.Albums import Album
+    from .views.AlbumView import AlbumView
     from .api.admin import MyAdminIndexView, aboutapi
+
     init_login(app)
     app.register_blueprint(sync)
     app.register_blueprint(videoapi)
@@ -53,10 +58,10 @@ def create_app(test_config=None):
     app.register_blueprint(aboutapi)
     a = admin.Admin(app, name="hugoweb", index_view=MyAdminIndexView(),
                         base_template='admin/my_master.html', template_mode="bootstrap3")
-    a.add_view(MyModelView(Video, db.session))
-    a.add_view(MyModelView(Administrator, db.session))
+    a.add_view(VideoView(Video, db.session))
+    a.add_view(AdminView(Administrator, db.session))
     a.add_view(AlbumView(Album, db.session))
-    a.add_view(ImageView(Photo, db.session))
+    a.add_view(PhotoView(Photo, db.session))
 
     # ensure the instance folder exists
     try:
