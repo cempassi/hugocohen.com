@@ -4,7 +4,7 @@
       <div v-for="video in line.videos" :key="video.id" >
         <router-link class="link" :to="'/video/' + video.id" :id="video.id">
           <div class="img-wrapper">
-            <img :src="video.image_small" />
+            <img :src="videoImage(video)" />
           </div>
         </router-link>
       </div>
@@ -34,6 +34,11 @@ export default class VideoView extends Vue {
   get videos() {
     return this.$store.state.videos;
   }
+
+	videoImage(video: Video){
+		return process.env.VUE_APP_API_URL + '/static/images/video/' + video.image;
+
+	}
 
   videolen() {
     const videos: Array<Video> = this.$store.state.videos;
@@ -90,14 +95,15 @@ export default class VideoView extends Vue {
 
   .img-wrapper {
     width: 100%;
+		max-width: 600px;
     overflow: hidden;
     margin: 0;
-    padding-top: 56.25%;
     position: relative;
   }
 
   .image-wrapper img {
     position: absolute;
+		width: inherit;
     top: 50%;
     left: 50%;
     width: 100%;

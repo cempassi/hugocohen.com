@@ -4,8 +4,7 @@ export interface InterfaceVideo {
   host: string;
   link: string;
   uri: string;
-  image_small: string;
-  image_large: string;
+  image: string;
   OnHome: boolean;
 }
 
@@ -15,8 +14,7 @@ export class VideoDTO implements InterfaceVideo {
   host = "";
   link = "";
   uri = "";
-  image_small = "";
-  image_large = "";
+  image = "";
   OnHome = false;
 }
 
@@ -27,6 +25,9 @@ export default class Video extends VideoDTO {
   }
 
   static create(dto: InterfaceVideo): Video {
+    dto.image =
+      process.env.VUE_APP_API_URL + "/static/images/videos/" + dto.image;
+    console.log(dto.image);
     return new Video(dto);
   }
 }
