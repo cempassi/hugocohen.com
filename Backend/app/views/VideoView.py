@@ -41,8 +41,8 @@ class VideoView(ModelView):
 
     form_extra_fields = {
             'image': ImageUploadField('Image',
-            base_path='/app/static/images/video',
-            url_relative_path="/static/video/images/",
+            base_path='/app/app/static/images/video',
+            url_relative_path="images/video/",
             namegen=_imagename_gen,
             thumbnail_size=(400, 300, 1))
             }

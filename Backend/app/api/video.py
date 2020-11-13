@@ -13,7 +13,6 @@ from ..models.Video import Video
 
 videoapi = Blueprint('videoapi', __name__, url_prefix='/video')
 
-
 def vimeo_to_db(data):
     video = {}
     current = Video.query.filter_by(name=data['name']).all()
@@ -22,17 +21,11 @@ def vimeo_to_db(data):
     video['name']: str = data['name']
     video['link']: str = data['link']
     video['uri']: str = data['uri'].replace('/videos/', '/video/')
-    for picture in data['pictures']['sizes']:
-        if picture['width'] == 640:
-            video['image_small']: str = picture['link']
-        elif picture['width'] == 960:
-            video['image_large'] = picture['link']
     updater = Video(name=video['name'],
                     link=video['link'],
                     uri=video['uri'],
                     host='vimeo',
-                    image_small=video['image_small'],
-                    image_large=video['image_large'],
+                    image="",
                     OnHome=False
                     )
     db.session.add(updater)
@@ -82,14 +75,11 @@ def youtube_to_db(data):
     video['name'] =  data['snippet']['title']
     video['link'] = f"https://youtu.be/{data['id']}"
     video['uri'] = data['id']
-    video['image_small'] = data['snippet']['thumbnails']['medium']['url']
-    video['image_large'] = data['snippet']['thumbnails']['high']['url']
     updater = Video(name=video['name'],
                     link=video['link'],
                     uri=video['uri'],
                     host='youtube',
-                    image_small=video['image_small'],
-                    image_large=video['image_large'],
+                    image="",
                     OnHome=False
                     )
     db.session.add(updater)
