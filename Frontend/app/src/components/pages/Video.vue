@@ -5,6 +5,9 @@
         <router-link class="link" :to="'/video/' + video.id" :id="video.id">
           <div class="img-wrapper">
             <img :src="videoImage(video)" />
+						<div class="transition">
+							<div class="name">{{video.name}}</div>
+						</div>
           </div>
         </router-link>
       </div>
@@ -69,7 +72,6 @@ export default class VideoView extends Vue {
 </script>
 
 <style scoped lang="scss">
-@media only screen and (min-width: 769px) {
   $gutter: 3vw;
 
   .lines {
@@ -78,11 +80,12 @@ export default class VideoView extends Vue {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+		justify-content: space-evenly;
   }
 
   .line {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     justify-content: space-evenly;
     align-items: center;
   }
@@ -94,87 +97,38 @@ export default class VideoView extends Vue {
   }
 
   .img-wrapper {
-    width: 100%;
+		width: 100%;
 		max-width: 600px;
     overflow: hidden;
     margin: 0;
     position: relative;
   }
 
-  .image-wrapper img {
-    position: absolute;
+  .img-wrapper img {
 		width: inherit;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    transform: translate(-50%, -50%);
   }
 
-  .name {
-    opacity: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    color: white;
-    font-size: 1em;
-    &:hover {
-      transition: opaticy 0.9s ease-in-out;
-      opacity: 1;
-    }
-  }
+	.img-wrapper:hover img {
+  	opacity: 0.3;
+	}
 
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 1s;
-  }
+	.img-wrapper:hover .transition {
+  	opacity: 1;
+	}
 
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
-  }
-}
+	.name {
+  	color: black;
+  	font-size: 16px;
+	  padding: 16px 32px;
+	}
 
-@media only screen and (max-width: 768px) {
-  .work_display {
-    display: inline-flex;
-
-    flex-direction: column;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-    padding-left: 5vw;
+  .transition {
+  	opacity: 0;
+  	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	-ms-transform: translate(-50%, -50%);
+  	text-align: center;
   }
-
-  .work_item {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    flex-direction: column;
-    background-position: center;
-    &:hover {
-      transition: filter 0.5s ease-in-out;
-      filter: gray;
-      -webkit-filter: grayscale(80%);
-    }
-  }
-
-  .name {
-    opacity: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    color: white;
-    font-size: 1em;
-    &:hover {
-      transition: opaticy 0.9s ease-in-out;
-      opacity: 1;
-    }
-  }
-}
 </style>
