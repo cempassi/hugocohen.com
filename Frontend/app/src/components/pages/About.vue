@@ -2,7 +2,8 @@
   <main class="layout">
     <div class="video">
       <video class="video-vid" autoplay loop muted playsinline>
-        <source type="video/mp4" src="@/assets/about.mp4" />Video isn't working
+        <source type="video/mp4" src="@/assets/about.mp4" />
+        Video isn't working
       </video>
     </div>
     <div class="content">
@@ -11,6 +12,11 @@
     <div class="clients">
       <p class="clients-text">{{about.clients}}</p>
     </div>
+		<div class="clients-wrapper">
+    	<div v-for="client in clients" :key="client" class="clients">
+      	<p class="clients-text">{{client}}</p>
+    	</div>
+		</div>
     <div class="links">
       <a :href="mail.link">
         <font-awesome-icon :icon="mail.icon"></font-awesome-icon>
@@ -47,8 +53,22 @@ export default class AboutView extends Vue {
     icon: faEnvelope,
   };
 
+  get clients() {
+    const clients = this.about.clients.split("|");
+    return clients;
+  }
+
   async mounted(): Promise<void> {
     this.about = await AboutAPI.getAbout();
+
+    Object.defineProperty(Array.prototype, "chunk", {
+      value: function (chunkSize: number) {
+        const R = [];
+        for (let i = 0; i < this.length; i += chunkSize)
+          R.push(this.slice(i, i + chunkSize));
+        return R;
+      },
+    });
   }
 }
 </script>
@@ -66,24 +86,21 @@ export default class AboutView extends Vue {
     grid-template-columns: 40vw 1vw 40vw;
     grid-template-rows: auto;
     grid-template-areas:
-      "video . content"
+			"video . content"
       "clients clients clients"
       " links links links ";
   }
 
-  .clients {
-    grid-area: clients;
-    justify-self: stretch;
-    text-align: center;
-	padding-top: 10vh;
-	padding-left: 20vw;
-	padding-right: 20vw;
+  .video {
+    grid-area: video;
+    align-self: center;
+    justify-self: center;
+    padding-left: 8vw;
 
-    &-text {
-      font-style: italic;
-      font-size: 1.5em;
-	  text-align: justify-center;
-      white-space: wrap;
+    &-vid {
+      width: 75%;
+      height: auto;
+      object-fit: contain;
     }
   }
 
@@ -96,15 +113,39 @@ export default class AboutView extends Vue {
     &-bio {
       font-size: 1rem;
       line-height: 2em;
-	padding-right: 10vw;
+      padding-right: 10vw;
     }
   }
 
+	.clients-wrapper{
+    grid-area: clients;
+		width:100%;
+		align-items:stretch;
+		justify-items: center;
+    padding-left: 8vw;
+
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: center;
+		align-content: space-around;
+  	.clients {
+				width: 30%;
+
+    	&-text {
+      	font-style: italic;
+      	font-size: 1em;
+      	text-align: justify-center;
+      	white-space: wrap;
+				padding-bottom:10px;
+    	}
+  	}
+	}
+
   .links {
     grid-area: links;
-	width: 100%;
-	padding-left:25vw;
-	padding-right:25vw;
+    width: 100%;
+    padding-left: 25vw;
+    padding-right: 25vw;
     display: flex;
     width: auto;
     flex-direction: row;
@@ -113,18 +154,6 @@ export default class AboutView extends Vue {
     font-size: 2em;
   }
 
-  .video {
-    grid-area: video;
-    align-self: center;
-    justify-self: center;
-	padding-left: 8vw;
-
-    &-vid {
-      width: 75%;
-      height: auto;
-      object-fit: contain;
-    }
-  }
 }
 
 @media only screen and (max-width: 768px) {
