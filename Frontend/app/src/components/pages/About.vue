@@ -7,10 +7,7 @@
       </video>
     </div>
     <div class="content">
-      <p class="content-bio">{{about.about}}</p>
-    </div>
-    <div class="clients">
-      <p class="clients-text">{{about.clients}}</p>
+      <p class="content-bio">{{ about.about }}</p>
     </div>
 		<div class="clients-wrapper">
     	<div v-for="client in clients" :key="client" class="clients">
@@ -140,7 +137,7 @@ export default class AboutView extends Vue {
     	}
   	}
 	}
-
+ 
   .links {
     grid-area: links;
     width: 100%;
@@ -157,59 +154,50 @@ export default class AboutView extends Vue {
 }
 
 @media only screen and (max-width: 768px) {
-  .content {
-    height: 80%;
+  $gutter: 5vw;
+
+  .layout {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .text {
-    order: 3;
-    text-align: justify;
-    font-size: 1em;
-    padding: 4vw;
-    line-height: 1em;
-  }
-
-  .links {
-    order: 2;
-    display: flex;
-    justify-content: space-between;
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-  }
-
-  a {
-    justify-content: space-between;
-    padding-top: 5vh;
-    padding-right: 10vw;
-    padding-left: 10vw;
-    font-size: 1.5vw;
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    font-size: 1em;
-  }
-  .icon {
-    font-size: 1.5em;
-  }
-
-  .av {
-    grid-row-start: 2;
-    grid-row-end: 4;
-    grid-column-start: 3;
-    grid-column-end: 4;
+		flex-flow: column wrap;
+		justify-content: space-around;
+		justify-items: stretch;
   }
 
   .video {
-    order: 1;
-    padding-right: 3vw;
-    align-self: start;
+    width: 100%;
+		display:flex;
+		justify-content: space-around;
+		padding-bottom: 2vh;
 
     &-vid {
-      width: 75%;
+      width: 70%;
       height: auto;
       object-fit: contain;
-    }
-  }
+			}
+	}
+
+  .content {
+    width: 90%;
+		display:flex;
+		justify-content: space-around;
+		padding-left: $gutter;
+		padding-bottom: 2vh;
+	}
+
+	.clients-wrapper{
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: center;
+		align-content: space-around;
+  	.clients {
+				width: 100%;
+    		&-text {
+      		text-align: justify-center;
+				}
+			}
+	}
+
+  .links {
+	}
 }
 </style>
