@@ -1,7 +1,7 @@
 <template>
   <main class="lines">
     <div v-for="line in lines" :key="line.nb" class="line">
-      <div v-for="video in line.videos" :key="video.id">
+      <div v-for="video in line.videos" :key="video.id" class="video">
         <router-link class="link" :to="'/video/' + video.id" :id="video.id">
           <div class="img-wrapper">
             <img :src="videoImage(video)" />
@@ -82,24 +82,20 @@ $gutter: 3vw;
   justify-content: space-evenly;
 }
 
-.line {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
 .link {
   height: 100%;
   width: 100%;
   text-decoration: none;
 }
 
+.video {
+  padding: 10px;
+}
+
 .img-wrapper {
   width: 100%;
   max-width: 600px;
   overflow: hidden;
-  margin: 0;
   position: relative;
 }
 
@@ -129,5 +125,24 @@ $gutter: 3vw;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   text-align: center;
+}
+
+@media only screen and (min-width: 769px) {
+  .line {
+    display: flex;
+    flex-flow: row nowrap;
+    flex: 0 2 auto;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .line {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+  }
 }
 </style>
