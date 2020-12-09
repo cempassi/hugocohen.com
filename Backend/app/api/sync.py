@@ -6,7 +6,6 @@ from flask import (
 from werkzeug.exceptions import abort
 from ..models import db
 from ..models.Video import Video
-import remote_pdb
 
 bp = Blueprint('sync', __name__, url_prefix='/sync')
 

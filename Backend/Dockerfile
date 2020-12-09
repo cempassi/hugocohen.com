@@ -15,8 +15,6 @@ RUN apk add tiff-dev build-base mariadb-dev libffi-dev git libjpeg-turbo-dev zli
     pip3 install --upgrade pip && pip3 install -r requirements.txt && \
     apk del build-base git
 
-RUN pip install remote-pdb pdbpp
-
 COPY ./entrypoint.sh /app/entrypoint.sh
 RUN chmod 777 /app/entrypoint.sh
 COPY ./app /app/app

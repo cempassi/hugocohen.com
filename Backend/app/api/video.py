@@ -10,7 +10,6 @@ from werkzeug.exceptions import abort
 from ..models import db
 from ..models.Video import Video
 
-
 videoapi = Blueprint('videoapi', __name__, url_prefix='/video')
 
 def vimeo_to_db(data):
