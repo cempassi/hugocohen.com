@@ -57,15 +57,6 @@ export default class AboutView extends Vue {
 
   async mounted(): Promise<void> {
     this.about = await AboutAPI.getAbout();
-
-    Object.defineProperty(Array.prototype, "chunk", {
-      value: function (chunkSize: number) {
-        const R = [];
-        for (let i = 0; i < this.length; i += chunkSize)
-          R.push(this.slice(i, i + chunkSize));
-        return R;
-      },
-    });
   }
 }
 </script>
@@ -125,6 +116,7 @@ export default class AboutView extends Vue {
 		flex-flow: row wrap;
 		justify-content: center;
 		align-content: space-around;
+
   	.clients {
 				width: 30%;
 
@@ -140,11 +132,12 @@ export default class AboutView extends Vue {
  
   .links {
     grid-area: links;
-    width: 100%;
+    display: flex;
+
+    width: auto;
     padding-left: 25vw;
     padding-right: 25vw;
-    display: flex;
-    width: auto;
+
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
@@ -161,13 +154,14 @@ export default class AboutView extends Vue {
 		flex-flow: column wrap;
 		justify-content: space-around;
 		justify-items: stretch;
+		padding-left: $gutter;
   }
 
   .video {
     width: 100%;
 		display:flex;
 		justify-content: space-around;
-		padding-bottom: 2vh;
+		padding-bottom: 3vh;
 
     &-vid {
       width: 70%;
@@ -177,11 +171,14 @@ export default class AboutView extends Vue {
 	}
 
   .content {
-    width: 90%;
+    width: 100%;
 		display:flex;
 		justify-content: space-around;
-		padding-left: $gutter;
-		padding-bottom: 2vh;
+    &-bio {
+      font-size: 1rem;
+      line-height: 2em;
+      padding-right: 10vw;
+    }
 	}
 
 	.clients-wrapper{
@@ -189,8 +186,12 @@ export default class AboutView extends Vue {
 		flex-flow: row wrap;
 		justify-content: center;
 		align-content: space-around;
+		 
   	.clients {
 				width: 100%;
+				display: flex;
+				justify-content: center;
+				padding-bottom: 1vh;
     		&-text {
       		text-align: justify-center;
 				}
@@ -198,6 +199,15 @@ export default class AboutView extends Vue {
 	}
 
   .links {
+    display: flex;
+
+    width: auto;
+    padding-top: 1em;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 2em;
 	}
 }
 </style>
