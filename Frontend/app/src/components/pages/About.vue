@@ -110,7 +110,6 @@ export default class AboutView extends Vue {
 		width:100%;
 		align-items:stretch;
 		justify-items: center;
-    padding-left: 8vw;
 
 		display: flex;
 		flex-flow: row wrap;
@@ -118,14 +117,13 @@ export default class AboutView extends Vue {
 		align-content: space-around;
 
   	.clients {
-				width: 30%;
 
     	&-text {
       	font-style: italic;
       	font-size: 1em;
       	text-align: justify-center;
       	white-space: wrap;
-				padding-bottom:10px;
+				padding:10px;
     	}
   	}
 	}
@@ -152,20 +150,17 @@ export default class AboutView extends Vue {
   .layout {
     display: flex;
 		flex-flow: column wrap;
-		justify-content: space-around;
-		justify-items: stretch;
 		padding-left: $gutter;
+		padding-right: $gutter;
   }
 
   .video {
     width: 100%;
-		display:flex;
-		justify-content: space-around;
-		padding-bottom: 3vh;
+		display: none;
+		justify-content: center;
 
     &-vid {
       width: 70%;
-      height: auto;
       object-fit: contain;
 			}
 	}
@@ -173,11 +168,13 @@ export default class AboutView extends Vue {
   .content {
     width: 100%;
 		display:flex;
-		justify-content: space-around;
+		justify-content: center;
+		padding-top: 5vh;
+		padding-bottom: 5vh;
     &-bio {
+			text-align: center;
       font-size: 1rem;
       line-height: 2em;
-      padding-right: 10vw;
     }
 	}
 
@@ -188,12 +185,12 @@ export default class AboutView extends Vue {
 		align-content: space-around;
 		 
   	.clients {
-				width: 100%;
-				display: flex;
-				justify-content: center;
-				padding-bottom: 1vh;
     		&-text {
-      		text-align: justify-center;
+      	font-style: italic;
+      	font-size: 1em;
+      	text-align: justify-center;
+      	white-space: wrap;
+				padding:10px;
 				}
 			}
 	}
@@ -208,6 +205,7 @@ export default class AboutView extends Vue {
     align-items: center;
     justify-content: space-evenly;
     font-size: 2em;
+		padding-bottom: 5vh;
 	}
 }
 </style>
