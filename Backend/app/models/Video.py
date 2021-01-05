@@ -34,11 +34,3 @@ class Video(db.Model):
             "image": f"{self.image}",
             "OnHome": self.OnHome
         }
-
-@event.listens_for(Video, 'after_delete')
-def del_image(mapper, connection, target):
-    if target.filepath is not None:
-        try:
-            os.remove(target.filepath)
-        except OSError:
-            pass
