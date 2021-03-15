@@ -2,7 +2,7 @@
   <main class="layout">
     <div class="video">
       <video class="video-vid" autoplay loop muted playsinline>
-        <source type="video/mp4" src="@/assets/about.mp4" />
+        <source type="video/mp4" :src="getVideo" />
         Video isn't working
       </video>
     </div>
@@ -26,8 +26,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
-import Navbar from "@/components/Navbar.vue";
+import { Component, Vue} from "vue-property-decorator";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import About from "@/models/About";
@@ -50,6 +49,9 @@ export default class AboutView extends Vue {
     icon: faEnvelope,
   };
 
+  get getVideo() {
+    return process.env.VUE_APP_API_URL + "/static/video/about.mp4";
+  }
   get clients() {
     const clients = this.about.clients.split("|");
     return clients;

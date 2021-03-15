@@ -16,9 +16,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue} from "vue-property-decorator";
 import Video from "@/models/Videos";
-import { VideoAPI } from "@/api/VideoAPI";
 
 @Component({
   name: "Videos",
@@ -27,8 +26,6 @@ import { VideoAPI } from "@/api/VideoAPI";
   },
 })
 export default class VideoView extends Vue {
-  private ScrollStatus = 0;
-  private ScrollMax = 0;
 
   created() {
     this.$store.dispatch("fetchVideos");
@@ -68,6 +65,7 @@ export default class VideoView extends Vue {
     return Math.floor(Math.random() * this.videolen());
   }
 }
+
 </script>
 
 <style scoped lang="scss">
